@@ -1,0 +1,39 @@
+/* stats d'équipe (sous-projet D) */
+.tst-maps { display: grid; gap: var(--sp-3); }
+.tst-map { position: relative; overflow: hidden; padding: var(--sp-4); background: var(--bg-2); }
+.tst-map::before { content: ""; position: absolute; inset: 0; background: var(--radar) right center / 40% auto no-repeat; opacity: .08; pointer-events: none; }
+.tst-map > * { position: relative; }
+.tst-map-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--sp-4); flex-wrap: wrap; margin-bottom: var(--sp-3); }
+.tst-kpi { display: grid; gap: 0; }
+.tst-kpi b { font-size: var(--fs-xl); line-height: 1.1; }
+.tst-kpi.big b { font-size: 36px; }
+.tst-kpi span { color: var(--fg-2); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .08em; }
+.tst-sides { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+.tst-side { padding: var(--sp-3); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--bg-1) 70%, transparent); border: 1px solid var(--line); }
+.tst-side.t { border-color: color-mix(in srgb, var(--t) 30%, var(--line)); }
+.tst-side.ct { border-color: color-mix(in srgb, var(--ct) 30%, var(--line)); }
+.tst-list { list-style: none; margin: var(--sp-2) 0 0; padding: 0; display: grid; gap: 4px; }
+.tst-list li { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: baseline; padding: 4px 0; border-top: 1px solid var(--line); font-size: var(--fs-sm); color: var(--fg-1); }
+.tst-list li b { color: var(--fg-0); font-size: var(--fs-md); }
+.tst-list li .comp { grid-column: 1 / -1; }
+.tst-players { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--sp-3); }
+.tst-player { display: grid; gap: 6px; padding: var(--sp-3) var(--sp-4); background: var(--bg-2); color: inherit; }
+.tst-player:hover { border-color: var(--accent); }
+.tst-player-name { font-size: var(--fs-lg); }
+.tst-player-roles { display: grid; gap: 3px; justify-items: start; }
+.tst-player-rating { font-size: 28px; font-weight: 700; }
+.tst-player-stats { color: var(--fg-2); font-size: var(--fs-xs); }
+.tst-cell-roles { margin-top: 3px; }
+.tst-cell-roles .role-badge.edge { font-size: var(--fs-xs); padding: 0 5px; }
+.tst-positions { display: grid; gap: var(--sp-4); }
+.tst-pos-grid { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr); gap: var(--sp-4); align-items: start; }
+.tst-places { display: flex; flex-wrap: wrap; gap: 4px; }
+.tst-place { height: 22px; padding: 0 8px; font-size: var(--fs-xs); cursor: default; }
+.tst-bars { display: grid; gap: 8px; }
+.tst-bar { display: grid; grid-template-columns: 90px 1fr 48px 36px; gap: var(--sp-3); align-items: center; font-size: var(--fs-sm); }
+.tst-track { height: 10px; background: var(--bg-3); border-radius: 5px; overflow: hidden; }
+.tst-track i { display: block; height: 100%; background: var(--accent); border-radius: 5px; }  /* une part de rounds, pas un camp */
+.tst-track i.dim { background: var(--fg-2); }
+.tst-setups { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.tst-setups li { display: grid; grid-template-columns: 1fr auto auto; gap: var(--sp-3); align-items: baseline; padding: 4px 0; border-top: 1px solid var(--line); font-size: var(--fs-sm); }
+@media (max-width: 900px) { .tst-sides, .tst-pos-grid { grid-template-columns: 1fr; } }

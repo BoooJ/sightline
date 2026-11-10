@@ -1,0 +1,2 @@
+Icônes d'armes de Counter-Strike 2 (propriété de Valve), reprises du projet open source lexogrine/cs2-react-hud.
+Utilisées comme masques CSS (couleur pilotée par le site). Proportions : src/features/replay/weaponIcons.ts.

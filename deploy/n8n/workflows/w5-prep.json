@@ -1,0 +1,140 @@
+{
+  "id": "sightlineW5prep01",
+  "name": "W5 · Prép d'avant-match → Discord",
+  "active": false,
+  "nodes": [
+    {
+      "id": "e5000000-0000-4000-8000-000000000001",
+      "name": "Toutes les 15 min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "*/15 * * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "e5000000-0000-4000-8000-000000000002",
+      "name": "Sightline : à venir",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://sightline.example.com/api/integrations/upcoming",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ hours: 24 }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      }
+    },
+    {
+      "id": "e5000000-0000-4000-8000-000000000003",
+      "name": "Messages de prép",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Un message par match, scrim ou tournoi qui commence dans les 24 h (Sightline ne le rend qu'une fois). L'heure est un\n// horodatage Discord : chacun la voit dans son fuseau (l'équipe est répartie entre plusieurs pays).\nconst safe = (s) => String(s ?? '').replace(/@/g, '@' + String.fromCharCode(0x200b)); // pas de mention venue des données\nconst KIND = { match: 'Match officiel', scrim: 'Prac', tournament: 'Tournoi' };\nconst ICON = { win: '✅', loss: '❌', draw: '➖' };\nreturn ($input.first().json.events || []).map((e) => {\n  const t = Math.floor(Date.parse(e.starts_at) / 1000);\n  const kind = KIND[e.kind] || 'Match';\n  const h = e.history || {};\n  const lines = [`🕗 <t:${t}:F> · <t:${t}:R>`];\n  const info = String(e.notes || '').split('\\n').map((l) => l.trim()).filter((l) => l && !/^https?:/.test(l)).slice(0, 2);\n  if (info.length) lines.push(safe(info.join(' · ')));\n  const past = h.matches || [];\n  if (past.length) {\n    lines.push('', `**Contre eux** : ${h.win} V – ${h.loss} D${h.draw ? ` – ${h.draw} N` : ''}`);\n    for (const m of past.slice(0, 3)) {\n      lines.push(`${ICON[m.result] || '•'} ${safe(m.map)} ${m.score[0]}–${m.score[1]}${m.date ? ` · ${m.date}` : ''}${m.url ? ` · [revoir](${m.url})` : ''}`);\n    }\n  } else {\n    lines.push('', 'Pas encore de match contre eux dans Sightline.');\n  }\n  if ((e.their_maps || []).length) {\n    lines.push(`**Leurs cartes** (dans nos démos) : ${e.their_maps.map((x) => `${safe(x.map)} ×${x.count}`).join(' · ')}`);\n  }\n  // cartes probables du BO1 (match FACEIT) : leurs cartes × les nôtres, avec leur bilan sur chacune\n  const odds = e.likely_maps;\n  if (odds && (odds.maps || []).length) {\n    const top = odds.maps.filter((m) => m.pct >= 5).slice(0, 4);\n    lines.push('', `**Cartes probables** : ${top.map((m) => `${safe(m.name)} ${m.pct} %`).join(' · ')}`);\n    const rec = top.filter((m) => m.played).map((m) => `${safe(m.name)} ${m.won}/${m.played}`);\n    if (rec.length) lines.push(`Leur bilan ESEA : ${rec.join(' · ')}`);\n    lines.push(`_D'après leurs ${odds.them} matchs ESEA et nos ${odds.us}${odds.few ? ' : peu de matchs, à prendre avec prudence' : ''}._`);\n  }\n  return { json: { content: `📅 ${kind} dans 24 h`, embed: {\n    title: safe(`${kind} contre ${e.opponent || e.title}`).slice(0, 256), url: e.url || undefined, color: 0x3ddc97,\n    description: lines.join('\\n').slice(0, 4000), footer: { text: safe(e.title).slice(0, 200) },\n  } } };\n});\n"
+      }
+    },
+    {
+      "id": "e5000000-0000-4000-8000-000000000004",
+      "name": "Discord · prép",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.content }}",
+        "options": {},
+        "embeds": {
+          "values": [
+            {
+              "inputMethod": "json",
+              "json": "={{ JSON.stringify($json.embed) }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "slCredDiscord001",
+          "name": "Discord Sightline"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    }
+  ],
+  "connections": {
+    "Toutes les 15 min": {
+      "main": [
+        [
+          {
+            "node": "Sightline : à venir",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sightline : à venir": {
+      "main": [
+        [
+          {
+            "node": "Messages de prép",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Messages de prép": {
+      "main": [
+        [
+          {
+            "node": "Discord · prép",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "errorWorkflow": "sightlineW0err01"
+  },
+  "pinData": {}
+}

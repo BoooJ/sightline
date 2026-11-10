@@ -1,0 +1,133 @@
+{
+  "id": "sightlineW6fcal01",
+  "name": "W6 · FACEIT → calendrier",
+  "active": false,
+  "nodes": [
+    {
+      "id": "f6000000-0000-4000-8000-000000000001",
+      "name": "Toutes les 15 min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "7-59/15 * * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f6000000-0000-4000-8000-000000000002",
+      "name": "Sightline : matchs FACEIT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://sightline.example.com/api/integrations/faceit-calendar",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({}) }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "f6000000-0000-4000-8000-000000000003",
+      "name": "Horaires déplacés",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Après la synchro FACEIT : un message par match dont l'horaire vient de changer, en heures Discord (chacun les voit dans\n// son fuseau). Sightline ou FACEIT injoignable : une alerte par jour au plus, le calendrier reste tel quel.\nconst safe = (s) => String(s ?? '').replace(/@/g, '@' + String.fromCharCode(0x200b)); // pas de mention venue des données\nconst state = $getWorkflowStaticData('global');\nconst r = $input.first().json;\nif (!Array.isArray(r.moved)) {\n  const now = Date.now();\n  if (state.faceitAlertAt && now - state.faceitAlertAt < 24 * 3600 * 1000) return [];\n  state.faceitAlertAt = now;\n  const why = r.error?.message || r.detail || 'réponse inattendue';\n  return [{ json: { content: safe(`⚠️ Calendrier FACEIT : synchro impossible (${why}). Nouvel essai toutes les 15 min.`).slice(0, 1900) } }];\n}\ndelete state.faceitAlertAt; // de nouveau joignable : la prochaine panne sera signalée\nconst t = (iso) => Math.floor(Date.parse(iso) / 1000);\nreturn r.moved.map((m) => ({ json: { content: safe(\n  `⏰ **${m.title}** déplacé : ~~<t:${t(m.before)}:f>~~ → **<t:${t(m.after)}:F>** (<t:${t(m.after)}:R>)`).slice(0, 1900) } }));\n"
+      }
+    },
+    {
+      "id": "f6000000-0000-4000-8000-000000000004",
+      "name": "Discord · horaire",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.content }}",
+        "options": {}
+      },
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "slCredDiscord001",
+          "name": "Discord Sightline"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    }
+  ],
+  "connections": {
+    "Toutes les 15 min": {
+      "main": [
+        [
+          {
+            "node": "Sightline : matchs FACEIT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sightline : matchs FACEIT": {
+      "main": [
+        [
+          {
+            "node": "Horaires déplacés",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Horaires déplacés": {
+      "main": [
+        [
+          {
+            "node": "Discord · horaire",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "errorWorkflow": "sightlineW0err01"
+  },
+  "pinData": {}
+}

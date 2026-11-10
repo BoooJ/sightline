@@ -1,0 +1,31 @@
+{
+  "name": "de_vertigo",
+  "display_name": "Vertigo",
+  "pos_x": -3168.0,
+  "pos_y": 1762.0,
+  "scale": 4.0,
+  "image": "de_vertigo.png",
+  "levels": [
+    {
+      "name": "upper",
+      "image": "de_vertigo.png",
+      "z_min": 11700.0,
+      "z_max": 20000.0
+    },
+    {
+      "name": "lower",
+      "image": "de_vertigo_lower.png",
+      "z_min": -10000.0,
+      "z_max": 11700.0
+    }
+  ],
+  "bomb_a": [
+    0.705,
+    0.585
+  ],
+  "bomb_b": [
+    0.222,
+    0.223
+  ],
+  "active_duty": false
+}

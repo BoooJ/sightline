@@ -1,0 +1,19 @@
+.report { max-width: 1200px; }
+.report-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-3); }
+.report-head { margin-bottom: var(--sp-4); }
+.report-head h1 { margin: 4px 0; }
+.report-summary ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--fg-1); line-height: 1.5; }
+
+/* impression / PDF : fond blanc, sans navigation, sections non coupées */
+@media print {
+  .app-sidebar, .rp-noprint, .app-burger { display: none !important; }
+  .app-shell { display: block; }
+  .app-main { overflow: visible; }
+  .report { max-width: none; padding: 0; --bg-0: #fff; --bg-1: #f6f7f8; --bg-2: #eceef0; --bg-3: #dfe2e5; --fg-0: #111; --fg-1: #333; --fg-2: #666;
+    --line: #d0d4d8; --line-strong: #aab0b6; color: #111; background: #fff; }
+  body { background: #fff !important; }
+  .report .panel { background: #fff !important; box-shadow: none !important; border: 1px solid #d0d4d8 !important; break-inside: avoid; }
+  .report .an-deaths { max-height: none; overflow: visible; }
+  .report .an-block, .report .an-card { break-inside: avoid; }
+  .report .btn { display: none; }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "de_anubis",
+  "display_name": "Anubis",
+  "pos_x": -2796.0,
+  "pos_y": 3328.0,
+  "scale": 5.22,
+  "image": "de_anubis.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "de_anubis.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": [
+    0.75,
+    0.26
+  ],
+  "bomb_b": [
+    0.33,
+    0.49
+  ],
+  "active_duty": true
+}

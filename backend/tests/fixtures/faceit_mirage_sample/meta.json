@@ -1,0 +1,18 @@
+{
+  "header": {
+    "patch_version": "14129",
+    "demo_file_stamp": "PBDEMS2\u0000",
+    "demo_version_guid": "8e9d71ab-04a1-4c01-bb61-acfede27c046",
+    "server_name": "FACEIT.com register to play here",
+    "map_name": "de_mirage",
+    "client_name": "SourceTV Demo",
+    "game_directory": "/home/cs20065/cs2/game/csgo",
+    "addons": "",
+    "demo_version_name": "valve_demo_2",
+    "fullpackets_version": "2",
+    "allow_clientside_entities": "true",
+    "allow_clientside_particles": "true"
+  },
+  "tickrate": 64,
+  "sample_rate": 16
+}

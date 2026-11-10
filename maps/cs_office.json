@@ -1,0 +1,19 @@
+{
+  "name": "cs_office",
+  "display_name": "Office",
+  "pos_x": -1838.0,
+  "pos_y": 1858.0,
+  "scale": 4.1,
+  "image": "cs_office.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "cs_office.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": null,
+  "bomb_b": null,
+  "active_duty": false
+}

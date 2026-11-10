@@ -1,0 +1,60 @@
+.co-intro { max-width: 760px; margin: 0 0 var(--sp-3); font-size: var(--fs-sm); }
+.co-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 440px); gap: var(--sp-4); align-items: start; }
+.co-map { padding: var(--sp-2); }
+.co-map svg { width: 100%; height: auto; display: block; }
+.co-pin circle { fill: var(--fg-1); stroke: var(--bg-0); }
+.co-pin text { fill: var(--fg-0); font-family: var(--font-ui); font-weight: 700; paint-order: stroke; stroke: var(--bg-0); stroke-linejoin: round; }
+.co-pin.custom circle { fill: var(--accent); }
+.co-pin.custom text { fill: var(--accent); }
+.co-pin.on circle { fill: var(--accent-strong); }
+.co-pin.on text { fill: var(--accent-strong); }
+.co-list { padding: var(--sp-2) var(--sp-3); max-height: 78vh; overflow: auto; }
+.co-list .st-table { min-width: 0; }  /* le tableau prend la largeur du volet (le style partagé impose 900 px) */
+.co-table th:last-child, .co-table td:last-child { width: 45%; }
+.co-table td { vertical-align: middle; }
+.co-focus td { background: var(--bg-2); }
+.co-input { width: 100%; min-width: 120px; height: 30px; padding: 0 8px; background: var(--bg-0); color: var(--fg-0); border: 1px solid var(--line); border-radius: var(--radius-sm); font: inherit; }
+.co-input:focus { outline: none; border-color: var(--accent); }
+.co-saved { display: block; color: var(--accent); font-size: var(--fs-xs); margin-top: 2px; }
+@media (max-width: 1100px) { .co-layout { grid-template-columns: 1fr; } }
+.co-map { position: relative; }
+.co-levels { position: absolute; top: var(--sp-3); left: var(--sp-3); z-index: 1; }
+.co-tools { position: absolute; top: var(--sp-3); left: var(--sp-3); right: var(--sp-3); z-index: 1; display: flex; gap: var(--sp-2); align-items: center; }
+.co-levels { display: none; }
+.co-placing { cursor: crosshair; }
+.co-map svg { touch-action: none; user-select: none; }
+.co-own { cursor: grab; }
+.co-own rect { fill: var(--accent); stroke: var(--bg-0); }
+.co-own text { fill: var(--accent); font-family: var(--font-ui); font-weight: 800; paint-order: stroke; stroke: var(--bg-0); stroke-linejoin: round; }
+.co-own-zone { fill: var(--accent); fill-opacity: .06; stroke: var(--accent); stroke-opacity: .35; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
+.co-own.on .co-own-zone { fill-opacity: .14; }
+.co-draft { width: 100%; padding: 0 8px; background: var(--bg-0); color: var(--fg-0); border: 1px solid var(--accent); border-radius: 4px; font-family: var(--font-ui); }
+.co-reserve { opacity: .7; }
+.co-own-list { list-style: none; margin: 0 0 var(--sp-3); padding: 0; display: grid; gap: 4px; }
+.co-own-list li { display: flex; align-items: center; gap: var(--sp-2); padding: 2px 4px; border-radius: var(--radius-sm); }
+.co-own-list li > svg { color: var(--accent); flex: none; }
+.co-gap { margin-top: var(--sp-3); }
+
+.co-list-head { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+
+/* onglet Zones : polygones de callouts éditables (inspirés de PRACC) */
+.co-views { margin-bottom: var(--sp-3); }
+.zn polygon { cursor: pointer; transition: fill-opacity var(--dur-1) var(--ease-out); }
+.zn text { font-family: var(--font-ui); font-weight: 700; paint-order: stroke; stroke: var(--bg-0); stroke-linejoin: round; pointer-events: none; }
+.zn-vertex { stroke: var(--bg-0); cursor: grab; }
+.zn-mid { fill: var(--bg-0); stroke: var(--fg-0); cursor: copy; opacity: .85; }
+.zn-mid:hover { opacity: 1; fill: var(--fg-0); }
+.zn-drawing polyline { fill: none; stroke: var(--accent); stroke-dasharray: 6 4; }
+.zn-drawing circle { fill: var(--accent); stroke: var(--bg-0); }
+.zn-drawing circle.close { fill: var(--accent-strong); }
+.zn-list { list-style: none; margin: var(--sp-2) 0; padding: 0; display: grid; gap: 4px; }
+.zn-list li { display: flex; align-items: center; gap: var(--sp-2); padding: 3px 4px; border-radius: var(--radius-sm); cursor: pointer; }
+.zn-list li.on { background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.zn-list li.off .co-input { opacity: .55; }
+.zn-swatch { flex: none; width: 22px; height: 22px; padding: 0; border: 1px solid rgb(0 0 0 / .35); border-radius: 4px; cursor: pointer; }
+.zn-actions { position: sticky; bottom: 0; display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; padding: var(--sp-2) 0;
+  background: var(--bg-1); border-top: 1px solid var(--line); }
+.zn-spacer { flex: 1; }
+.zn-msg { margin: var(--sp-2) 0 0; }
+.co-search { height: 28px; } .co-search input { width: 160px; }
+.co-table tr.co-custom td:first-child { color: var(--accent); }

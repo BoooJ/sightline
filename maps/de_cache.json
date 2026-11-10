@@ -1,0 +1,25 @@
+{
+  "name": "de_cache",
+  "display_name": "Cache",
+  "pos_x": -2000.0,
+  "pos_y": 3250.0,
+  "scale": 5.5,
+  "image": "de_cache.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "de_cache.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": [
+    0.325,
+    0.26
+  ],
+  "bomb_b": [
+    0.345,
+    0.79
+  ],
+  "active_duty": true
+}

@@ -1,0 +1,31 @@
+{
+  "name": "de_nuke",
+  "display_name": "Nuke",
+  "pos_x": -3453.0,
+  "pos_y": 2887.0,
+  "scale": 7.0,
+  "image": "de_nuke.png",
+  "levels": [
+    {
+      "name": "upper",
+      "image": "de_nuke.png",
+      "z_min": -495.0,
+      "z_max": 10000.0
+    },
+    {
+      "name": "lower",
+      "image": "de_nuke_lower.png",
+      "z_min": -10000.0,
+      "z_max": -495.0
+    }
+  ],
+  "bomb_a": [
+    0.58,
+    0.48
+  ],
+  "bomb_b": [
+    0.58,
+    0.58
+  ],
+  "active_duty": true
+}

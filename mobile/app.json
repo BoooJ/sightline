@@ -1,0 +1,59 @@
+{
+  "expo": {
+    "name": "Sightline",
+    "slug": "sightline",
+    "version": "0.2.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "sightline",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0c0f12",
+    "ios": {
+      "bundleIdentifier": "com.boooj.sightline",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.boooj.sightline",
+      "versionCode": 2,
+      "adaptiveIcon": {
+        "backgroundColor": "#0c0f12",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png",
+      "name": "Sightline",
+      "shortName": "Sightline",
+      "lang": "fr",
+      "themeColor": "#0c0f12",
+      "backgroundColor": "#0c0f12"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0c0f12",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 96
+        }
+      ],
+      "expo-secure-store",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true,
+      "baseUrl": "/app"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "19b5df9e-d8c6-42c9-8728-910fe1e30b69"
+      }
+    },
+    "owner": "booj02"
+  }
+}

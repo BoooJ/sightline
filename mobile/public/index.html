@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <!-- viewport-fit=cover : l'app occupe tout l'écran de l'iPhone, les zones de sécurité sont gérées dans l'app -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>%WEB_TITLE%</title>
+    <meta name="description" content="Sightline : ton carnet de match CS2. Prépare l'adversaire, lis ton bilan, garde tes grenades à côté du clavier." />
+    <meta name="theme-color" content="#0c0f12" />
+    <meta name="color-scheme" content="dark" />
+    <!-- installation sur l'écran d'accueil (PWA) -->
+    <link rel="manifest" href="/app/manifest.json" />
+    <link rel="apple-touch-icon" href="/app/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Sightline" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
+    <style id="expo-reset">
+      html,
+      body {
+        height: 100%;
+        background-color: #0c0f12;
+      }
+      body {
+        overflow: hidden;
+        /* pas de surlignage gris au toucher sur iOS : l'app a son propre retour d'appui */
+        -webkit-tap-highlight-color: transparent;
+      }
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+      /* app ouverte depuis l'écran d'accueil d'un iPhone : avec viewport-fit=cover, 100 % s'arrête une barre d'état
+         trop tôt (bug WebKit 237961) et la barre d'onglets flotte au-dessus d'une bande vide ; 100vh couvre tout l'écran */
+      @media (display-mode: standalone) {
+        html,
+        body {
+          height: 100vh;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>Sightline a besoin de JavaScript.</noscript>
+    <div id="root"></div>
+    <script>
+      // notifications web : le service worker affiche les messages du serveur (aucun cache)
+      if ("serviceWorker" in navigator) {
+        addEventListener("load", () => navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" }).catch(() => {}));
+      }
+    </script>
+  </body>
+</html>

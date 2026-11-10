@@ -1,0 +1,25 @@
+{
+  "name": "de_mirage",
+  "display_name": "Mirage",
+  "pos_x": -3230.0,
+  "pos_y": 1713.0,
+  "scale": 5.0,
+  "image": "de_mirage.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "de_mirage.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": [
+    0.54,
+    0.76
+  ],
+  "bomb_b": [
+    0.23,
+    0.28
+  ],
+  "active_duty": true
+}

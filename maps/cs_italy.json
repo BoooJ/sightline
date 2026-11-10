@@ -1,0 +1,19 @@
+{
+  "name": "cs_italy",
+  "display_name": "Italy",
+  "pos_x": -2647.0,
+  "pos_y": 2592.0,
+  "scale": 4.6,
+  "image": "cs_italy.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "cs_italy.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": null,
+  "bomb_b": null,
+  "active_duty": false
+}

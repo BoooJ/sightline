@@ -1,0 +1,1761 @@
+{
+ "team_id": "11111111-1111-1111-1111-111111111111",
+ "players": [
+  "aaaaaaaa-0000-0000-0000-000000000001",
+  "aaaaaaaa-0000-0000-0000-000000000002",
+  "aaaaaaaa-0000-0000-0000-000000000003",
+  "aaaaaaaa-0000-0000-0000-000000000004",
+  "aaaaaaaa-0000-0000-0000-000000000005"
+ ],
+ "matches": {
+  "m1": "1-cccccccc-cccc-cccc-cccc-cccccccccccc",
+  "m2": "1-dddddddd-dddd-dddd-dddd-dddddddddddd",
+  "m3": "1-eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+  "m4": "1-ffffffff-ffff-ffff-ffff-ffffffffffff"
+ },
+ "steam": {
+  "aaaaaaaa-0000-0000-0000-000000000001": "76561198000000001",
+  "aaaaaaaa-0000-0000-0000-000000000002": "76561198000000002",
+  "aaaaaaaa-0000-0000-0000-000000000003": "76561198000000003",
+  "aaaaaaaa-0000-0000-0000-000000000004": "76561198000000004",
+  "aaaaaaaa-0000-0000-0000-000000000005": "76561198000000005",
+  "aaaaaaaa-0000-0000-0000-000000000009": "76561198000000006"
+ },
+ "routes": {
+  "/teams/11111111-1111-1111-1111-111111111111": {
+   "team_id": "11111111-1111-1111-1111-111111111111",
+   "name": "Les Ours",
+   "avatar": "",
+   "leader": "aaaaaaaa-0000-0000-0000-000000000001",
+   "members": [
+    {
+     "user_id": "aaaaaaaa-0000-0000-0000-000000000001",
+     "nickname": "n1"
+    },
+    {
+     "user_id": "aaaaaaaa-0000-0000-0000-000000000002",
+     "nickname": "n2"
+    },
+    {
+     "user_id": "aaaaaaaa-0000-0000-0000-000000000003",
+     "nickname": "n3"
+    },
+    {
+     "user_id": "aaaaaaaa-0000-0000-0000-000000000004",
+     "nickname": "n4"
+    },
+    {
+     "user_id": "aaaaaaaa-0000-0000-0000-000000000005",
+     "nickname": "n5"
+    }
+   ]
+  },
+  "/teams/11111111-1111-1111-1111-111111111111/stats/cs2": {
+   "segments": [
+    {
+     "type": "Map",
+     "label": "Mirage",
+     "stats": {
+      "Matches": "10",
+      "Win Rate %": "60"
+     }
+    },
+    {
+     "type": "Map",
+     "label": "Inferno",
+     "stats": {
+      "Matches": "4",
+      "Win Rate %": "25"
+     }
+    }
+   ]
+  },
+  "/search/teams": {
+   "items": [
+    {
+     "team_id": "11111111-1111-1111-1111-111111111111",
+     "name": "Les Ours",
+     "avatar": ""
+    }
+   ]
+  },
+  "/players": {
+   "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+   "nickname": "n1"
+  },
+  "/matches/1-cccccccc-cccc-cccc-cccc-cccccccccccc": {
+   "match_id": "1-cccccccc-cccc-cccc-cccc-cccccccccccc",
+   "status": "FINISHED",
+   "competition_name": "ESEA",
+   "teams": {
+    "faction1": {
+     "faction_id": "11111111-1111-1111-1111-111111111111",
+     "name": "Les Ours",
+     "roster": [
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+       "nickname": "n1",
+       "game_player_id": "76561198000000001"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+       "nickname": "n2",
+       "game_player_id": "76561198000000002"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+       "nickname": "n3",
+       "game_player_id": "76561198000000003"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+       "nickname": "n4",
+       "game_player_id": "76561198000000004"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+       "nickname": "n5",
+       "game_player_id": "76561198000000005"
+      }
+     ]
+    },
+    "faction2": {
+     "faction_id": "22222222-2222-2222-2222-222222222222",
+     "name": "Rivaux",
+     "roster": [
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+       "nickname": "n1",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+       "nickname": "n2",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+       "nickname": "n3",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+       "nickname": "n4",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+       "nickname": "n5",
+       "game_player_id": ""
+      }
+     ]
+    }
+   },
+   "voting": {
+    "map": {
+     "pick": [
+      "de_mirage"
+     ]
+    }
+   },
+   "demo_url": [
+    "https://demos.faceit.example/cs2/1-cccccccc-cccc-cccc-cccc-cccccccccccc-1-1.dem.gz"
+   ]
+  },
+  "/matches/1-cccccccc-cccc-cccc-cccc-cccccccccccc/stats": {
+   "rounds": [
+    {
+     "round_stats": {
+      "Map": "de_mirage",
+      "Score": "13 / 9"
+     },
+     "teams": [
+      {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "team_stats": {
+        "Final Score": "13"
+       },
+       "players": []
+      },
+      {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "team_stats": {
+        "Final Score": "9"
+       },
+       "players": []
+      }
+     ]
+    }
+   ]
+  },
+  "/matches/1-dddddddd-dddd-dddd-dddd-dddddddddddd": {
+   "match_id": "1-dddddddd-dddd-dddd-dddd-dddddddddddd",
+   "status": "FINISHED",
+   "competition_name": "ESEA",
+   "teams": {
+    "faction1": {
+     "faction_id": "33333333-3333-3333-3333-333333333333",
+     "name": "Autres",
+     "roster": [
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+       "nickname": "n1",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+       "nickname": "n2",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+       "nickname": "n3",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+       "nickname": "n4",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+       "nickname": "n5",
+       "game_player_id": ""
+      }
+     ]
+    },
+    "faction2": {
+     "faction_id": "11111111-1111-1111-1111-111111111111",
+     "name": "Les Ours",
+     "roster": [
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+       "nickname": "n1",
+       "game_player_id": "76561198000000001"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+       "nickname": "n2",
+       "game_player_id": "76561198000000002"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+       "nickname": "n3",
+       "game_player_id": "76561198000000003"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+       "nickname": "n4",
+       "game_player_id": "76561198000000004"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000009",
+       "nickname": "n9",
+       "game_player_id": "76561198000000006"
+      }
+     ]
+    }
+   },
+   "voting": {
+    "map": {
+     "pick": [
+      "de_inferno"
+     ]
+    }
+   },
+   "demo_url": []
+  },
+  "/matches/1-dddddddd-dddd-dddd-dddd-dddddddddddd/stats": {
+   "rounds": [
+    {
+     "round_stats": {
+      "Map": "de_inferno",
+      "Score": "13 / 10"
+     },
+     "teams": [
+      {
+       "team_id": "33333333-3333-3333-3333-333333333333",
+       "team_stats": {
+        "Final Score": "13"
+       },
+       "players": []
+      },
+      {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "team_stats": {
+        "Final Score": "10"
+       },
+       "players": []
+      }
+     ]
+    }
+   ]
+  },
+  "/matches/1-ffffffff-ffff-ffff-ffff-ffffffffffff": {
+   "match_id": "1-ffffffff-ffff-ffff-ffff-ffffffffffff",
+   "status": "FINISHED",
+   "competition_name": "ESEA",
+   "teams": {
+    "faction1": {
+     "faction_id": "11111111-1111-1111-1111-111111111111",
+     "name": "Les Ours",
+     "roster": [
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+       "nickname": "n1",
+       "game_player_id": "76561198000000001"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+       "nickname": "n2",
+       "game_player_id": "76561198000000002"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+       "nickname": "n3",
+       "game_player_id": "76561198000000003"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+       "nickname": "n4",
+       "game_player_id": "76561198000000004"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+       "nickname": "n5",
+       "game_player_id": "76561198000000005"
+      }
+     ]
+    },
+    "faction2": {
+     "faction_id": "22222222-2222-2222-2222-222222222222",
+     "name": "Rivaux",
+     "roster": [
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+       "nickname": "n1",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+       "nickname": "n2",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+       "nickname": "n3",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+       "nickname": "n4",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+       "nickname": "n5",
+       "game_player_id": ""
+      }
+     ]
+    }
+   },
+   "voting": {
+    "map": {
+     "pick": [
+      "de_nuke"
+     ]
+    }
+   },
+   "demo_url": []
+  },
+  "/matches/1-ffffffff-ffff-ffff-ffff-ffffffffffff/stats": {
+   "rounds": [
+    {
+     "round_stats": {
+      "Map": "de_nuke",
+      "Score": "7 / 13"
+     },
+     "teams": [
+      {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "team_stats": {
+        "Final Score": "7"
+       },
+       "players": []
+      },
+      {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "team_stats": {
+        "Final Score": "13"
+       },
+       "players": []
+      }
+     ]
+    }
+   ]
+  },
+  "/matches/1-eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee": {
+   "match_id": "1-eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+   "status": "FINISHED",
+   "competition_name": "ESEA",
+   "teams": {
+    "faction1": {
+     "faction_id": "x",
+     "name": "team_n1",
+     "roster": [
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+       "nickname": "n1",
+       "game_player_id": "76561198000000001"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+       "nickname": "n2",
+       "game_player_id": "76561198000000002"
+      },
+      {
+       "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+       "nickname": "n3",
+       "game_player_id": "76561198000000003"
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+       "nickname": "n1",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+       "nickname": "n2",
+       "game_player_id": ""
+      }
+     ]
+    },
+    "faction2": {
+     "faction_id": "y",
+     "name": "team_z",
+     "roster": [
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+       "nickname": "n3",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+       "nickname": "n4",
+       "game_player_id": ""
+      },
+      {
+       "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+       "nickname": "n5",
+       "game_player_id": ""
+      }
+     ]
+    }
+   },
+   "voting": {
+    "map": {
+     "pick": [
+      "de_ancient"
+     ]
+    }
+   },
+   "demo_url": []
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000001/history": {
+   "items": [
+    {
+     "match_id": "1-cccccccc-cccc-cccc-cccc-cccccccccccc",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1760000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-dddddddd-dddd-dddd-dddd-dddddddddddd",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1759000000,
+     "teams": {
+      "faction1": {
+       "team_id": "33333333-3333-3333-3333-333333333333",
+       "nickname": "Autres",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000009",
+         "nickname": "n9"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+     "competition_name": "5v5 RANKED",
+     "competition_type": "matchmaking",
+     "status": "finished",
+     "started_at": 1761000000,
+     "teams": {
+      "faction1": {
+       "team_id": "x",
+       "nickname": "team_n1",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "y",
+       "nickname": "team_z",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-ffffffff-ffff-ffff-ffff-ffffffffffff",
+     "competition_name": "FACEIT Club League",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1758000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction2",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    }
+   ]
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000001": {
+   "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+   "nickname": "n1",
+   "country": "fr",
+   "games": {
+    "cs2": {
+     "skill_level": 9,
+     "faceit_elo": 2050,
+     "game_player_id": "76561198000000001"
+    }
+   }
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000002/history": {
+   "items": [
+    {
+     "match_id": "1-cccccccc-cccc-cccc-cccc-cccccccccccc",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1760000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-dddddddd-dddd-dddd-dddd-dddddddddddd",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1759000000,
+     "teams": {
+      "faction1": {
+       "team_id": "33333333-3333-3333-3333-333333333333",
+       "nickname": "Autres",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000009",
+         "nickname": "n9"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+     "competition_name": "5v5 RANKED",
+     "competition_type": "matchmaking",
+     "status": "finished",
+     "started_at": 1761000000,
+     "teams": {
+      "faction1": {
+       "team_id": "x",
+       "nickname": "team_n1",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "y",
+       "nickname": "team_z",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-ffffffff-ffff-ffff-ffff-ffffffffffff",
+     "competition_name": "FACEIT Club League",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1758000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction2",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    }
+   ]
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000002": {
+   "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+   "nickname": "n2",
+   "country": "fr",
+   "games": {
+    "cs2": {
+     "skill_level": 8,
+     "faceit_elo": 2100,
+     "game_player_id": "76561198000000002"
+    }
+   }
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000003/history": {
+   "items": [
+    {
+     "match_id": "1-cccccccc-cccc-cccc-cccc-cccccccccccc",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1760000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-dddddddd-dddd-dddd-dddd-dddddddddddd",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1759000000,
+     "teams": {
+      "faction1": {
+       "team_id": "33333333-3333-3333-3333-333333333333",
+       "nickname": "Autres",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000009",
+         "nickname": "n9"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+     "competition_name": "5v5 RANKED",
+     "competition_type": "matchmaking",
+     "status": "finished",
+     "started_at": 1761000000,
+     "teams": {
+      "faction1": {
+       "team_id": "x",
+       "nickname": "team_n1",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "y",
+       "nickname": "team_z",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-ffffffff-ffff-ffff-ffff-ffffffffffff",
+     "competition_name": "FACEIT Club League",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1758000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction2",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    }
+   ]
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000003": {
+   "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+   "nickname": "n3",
+   "country": "fr",
+   "games": {
+    "cs2": {
+     "skill_level": 10,
+     "faceit_elo": 2150,
+     "game_player_id": "76561198000000003"
+    }
+   }
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000004/history": {
+   "items": [
+    {
+     "match_id": "1-cccccccc-cccc-cccc-cccc-cccccccccccc",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1760000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-dddddddd-dddd-dddd-dddd-dddddddddddd",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1759000000,
+     "teams": {
+      "faction1": {
+       "team_id": "33333333-3333-3333-3333-333333333333",
+       "nickname": "Autres",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000009",
+         "nickname": "n9"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-ffffffff-ffff-ffff-ffff-ffffffffffff",
+     "competition_name": "FACEIT Club League",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1758000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction2",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    }
+   ]
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000004": {
+   "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+   "nickname": "n4",
+   "country": "fr",
+   "games": {
+    "cs2": {
+     "skill_level": 9,
+     "faceit_elo": 2200,
+     "game_player_id": "76561198000000004"
+    }
+   }
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000005/history": {
+   "items": [
+    {
+     "match_id": "1-cccccccc-cccc-cccc-cccc-cccccccccccc",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1760000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    },
+    {
+     "match_id": "1-ffffffff-ffff-ffff-ffff-ffffffffffff",
+     "competition_name": "FACEIT Club League",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1758000000,
+     "teams": {
+      "faction1": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "22222222-2222-2222-2222-222222222222",
+       "nickname": "Rivaux",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction2",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    }
+   ]
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000005": {
+   "player_id": "aaaaaaaa-0000-0000-0000-000000000005",
+   "nickname": "n5",
+   "country": "fr",
+   "games": {
+    "cs2": {
+     "skill_level": 8,
+     "faceit_elo": 2250,
+     "game_player_id": "76561198000000005"
+    }
+   }
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000009/history": {
+   "items": [
+    {
+     "match_id": "1-dddddddd-dddd-dddd-dddd-dddddddddddd",
+     "competition_name": "ESEA S55 EU Intermediate",
+     "competition_type": "championship",
+     "status": "finished",
+     "started_at": 1759000000,
+     "teams": {
+      "faction1": {
+       "team_id": "33333333-3333-3333-3333-333333333333",
+       "nickname": "Autres",
+       "players": [
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "bbbbbbbb-0000-0000-0000-000000000005",
+         "nickname": "n5"
+        }
+       ]
+      },
+      "faction2": {
+       "team_id": "11111111-1111-1111-1111-111111111111",
+       "nickname": "Les Ours",
+       "players": [
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000001",
+         "nickname": "n1"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000002",
+         "nickname": "n2"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000003",
+         "nickname": "n3"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000004",
+         "nickname": "n4"
+        },
+        {
+         "player_id": "aaaaaaaa-0000-0000-0000-000000000009",
+         "nickname": "n9"
+        }
+       ]
+      }
+     },
+     "results": {
+      "winner": "faction1",
+      "score": {
+       "faction1": 1,
+       "faction2": 0
+      }
+     }
+    }
+   ]
+  },
+  "/players/aaaaaaaa-0000-0000-0000-000000000009": {
+   "player_id": "aaaaaaaa-0000-0000-0000-000000000009",
+   "nickname": "n9",
+   "country": "fr",
+   "games": {
+    "cs2": {
+     "skill_level": 10,
+     "faceit_elo": 2300,
+     "game_player_id": "76561198000000006"
+    }
+   }
+  }
+ }
+}

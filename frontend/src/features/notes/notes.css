@@ -1,0 +1,22 @@
+/* Notes des joueurs : panneau commun (Stratbook, stratégie, scouting, débrief) */
+.nt-panel { display: grid; gap: var(--sp-3); align-content: start; }
+.nt-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.nt-head .section-title { margin: 0; }
+.nt-item .cm-head { flex-wrap: wrap; }
+.nt-item a.mlab { text-decoration: none; }
+.nt-item a.mlab:hover { color: var(--fg-0); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.nt-actions { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
+.nt-actions .cm-del { margin-left: 0; }
+.nt-link { padding: 0; border: 0; background: none; color: var(--fg-2); font: inherit; font-size: var(--fs-xs); cursor: pointer; }
+.nt-link:hover { color: var(--accent); }
+.nt-editor { padding: var(--sp-3); background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); }
+.nt-editor textarea { min-height: 96px; background: var(--bg-1); }
+.nt-opts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.nt-select { height: 28px; padding: 0 8px; background: var(--bg-1); color: var(--fg-0); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm); font: 13px var(--font-ui); }
+.nt-chip { display: inline-flex; align-items: center; gap: 4px; }
+.nt-chip button { display: inline-flex; padding: 0; border: 0; background: none; color: var(--fg-2); cursor: pointer; }
+.nt-chip button:hover { color: var(--error); }
+.nt-count { margin-left: auto; color: var(--warning, var(--fg-1)); }
+.nt-error { margin: 0; color: var(--error); font-size: var(--fs-sm); }
+.db-notes { margin-top: var(--sp-4); }

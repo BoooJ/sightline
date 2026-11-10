@@ -1,0 +1,25 @@
+{
+  "name": "de_overpass",
+  "display_name": "Overpass",
+  "pos_x": -4831.0,
+  "pos_y": 1781.0,
+  "scale": 5.2,
+  "image": "de_overpass.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "de_overpass.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": [
+    0.55,
+    0.23
+  ],
+  "bomb_b": [
+    0.7,
+    0.31
+  ],
+  "active_duty": false
+}

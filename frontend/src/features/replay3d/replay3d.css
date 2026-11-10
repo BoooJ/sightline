@@ -1,0 +1,211 @@
+/* chiffres du HUD de la vue du joueur en police mono grasse (relevé) : notre JetBrains Mono, en vrai gras */
+@import "@fontsource/jetbrains-mono/700.css";
+/* Vue 3D du replay : occupe la zone du radar ; barre des caméras en haut à gauche (le fil des kills est à droite). */
+.r3-scene { position: absolute; inset: 0; }
+/* replay repassé en 2D : vue gardée (carte, textures, caméra) mais cachée sous le radar ; rien n'y est dessiné (Viewer.pause) */
+.r3-scene[hidden] { display: none; }
+.r3-canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+.r3-canvas:active { cursor: grabbing; }
+/* écran étroit : la barre passe à la ligne au lieu de déborder, et reste au-dessus du fil des kills (un toucher sur
+   une caméra ne doit pas faire sauter la frise) ; sous l'encart de chargement plein écran */
+.r3-bar { position: absolute; top: var(--sp-3); left: var(--sp-3); z-index: 4; display: flex; flex-wrap: wrap; align-items: center;
+  gap: 2px; padding: 3px; max-width: calc(100% - 2 * var(--sp-3)); background: color-mix(in srgb, var(--bg-1) 90%, transparent);
+  border-radius: var(--radius-md); }
+.r3-bar .btn.on { color: var(--accent); background: var(--accent-dim); }
+.r3-sep { width: 1px; height: 18px; margin: 0 var(--sp-1); background: var(--line-strong); }
+.r3-load { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: var(--sp-2);
+  background: rgb(0 0 0 / 0.45); color: var(--fg-0); z-index: 5; }
+/* textures en cours, carte déjà affichée : petit encart en bas à droite, qui laisse les caméras utilisables */
+.r3-load.mini { inset: auto var(--sp-3) var(--sp-3) auto; padding: var(--sp-1) var(--sp-2); border-radius: var(--radius-md);
+  font-size: var(--fs-xs); background: rgb(0 0 0 / 0.6); pointer-events: none; }
+.r3-load.mini .r3-progress { width: 120px; height: 4px; }
+.r3-progress { display: block; width: 240px; height: 6px; border-radius: 3px; background: rgb(255 255 255 / 0.15); overflow: hidden; }
+.r3-progress i { display: block; height: 100%; background: var(--accent); transform-origin: left; }
+.r3-toggle { display: inline-flex; align-items: center; gap: 2px; }
+.r3-fail { color: var(--warn); font-size: var(--fs-xs); margin-left: var(--sp-2); }
+/* Vue du joueur : lunette, réticule et HUD par-dessus le canvas, sous la barre des caméras et les panneaux de la page
+   (z-index 4 et plus) ; ils ne prennent pas les clics (choisir un joueur reste possible). Pas de contexte d'empilement
+   ici : le flou de la lunette doit voir le canvas. */
+.r3-pov { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+/* Lunette (ScopeOverlay) : les dimensions, en fractions de vmin, sont écrites par le composant ; ici seulement la mise en
+   place : chaque pièce (flou, anneau, lignes) est centrée sur la vue par ses marges automatiques. */
+.r3-scope, .r3-scope-lens { position: absolute; inset: 0; }
+.r3-scope-lens > * { position: absolute; inset: 0; margin: auto; box-sizing: border-box; }
+.r3-xhair { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+/* Voile blanc des flashs : plein écran, dernier enfant du calque et au-dessus du HUD (z-index 2 contre 1 ;
+   relevé : voile à 40, HUD à 38) : un flash blanchit tout uniformément, HUD et dégradé compris. Opacité = --r3-flash,
+   posée sur le voile lui-même par Scene3D (veilWriter ; 0 sans flash). Ne prend aucun clic (hérité de `.r3-pov`). */
+.r3-veil { position: absolute; inset: 0; z-index: 2; background: #fff; opacity: var(--r3-flash, 0); pointer-events: none; }
+
+/* HUD de la vue du joueur (PovHud.tsx), reproduit d'après des mesures du HUD de CS2 : chaque bloc est
+   dessiné en pixels « 1080p », ancré à un bord de la vue sans marge (radar et barre de score collés en haut), puis réduit
+   depuis son ancre par --k = hauteur de la vue / 1080 (posé par Scene3D, `hudScale`, borné par la largeur dans une vue
+   étroite). Au-dessus de la lunette et du réticule (z-index 1), sous le voile des flashs et sous les panneaux de la page
+   (z-index 4 et plus). Aucun clic n'est pris (hérité de `.r3-pov`). Couleurs relevées (celles du jeu). */
+.r3-cs { position: absolute; inset: 0; z-index: 1; overflow: hidden; color: #fff; font-family: var(--font-display);
+  font-variant-numeric: tabular-nums; line-height: 1; --k: var(--r3-k, 0.5);
+  /* couleur du camp du joueur suivi (textes, barres, bordures) et teinte des armes ; arme en main : teinte × 1,5 */
+  --wash: rgb(234 190 84); --tint: rgb(211 173 81); --tint-on: rgb(255 255 122);
+  /* chiffres en police mono (argent, vie des cartes, numéros des armes, ADR ; horloge, scores, vie et munitions
+     du bas sont en chiffres tabulaires de la police d'affichage) : JetBrains Mono, un peu resserrée pour garder
+     la chasse relevée (0,53 em par chiffre dans les cartes, 0,45 pour l'argent du bas, contre 0,6) ; « $16000 » tient dans une
+     carte de 56 px */
+  --r3-mono-tight: -0.07em; }
+.r3-cs.ct { --wash: rgb(150 200 250); --tint: rgb(139 182 225); --tint-on: rgb(209 255 255); }
+.r3-cs > * { position: absolute; }
+
+/* dégradé sombre du bas : 300 px (1080p) de haut, 0,52 de noir au bord, nul en haut (courbe relevée : 0,37 à
+   20 %, 0,21 à 50 %, 0,07 à 80 %) ; dans le HUD, donc par-dessus la lunette, et sous le voile des flashs */
+.r3-shade { left: 0; right: 0; bottom: 0; height: calc(300px * var(--k));
+  background: linear-gradient(to top, rgb(0 0 0 / 0.52), rgb(0 0 0 / 0.37) 20%, rgb(0 0 0 / 0.21) 50%, rgb(0 0 0 / 0.07) 80%, transparent); }
+
+/* radar : carré de 300 px collé en haut à gauche, à 1,3 × --k (226 px dans une vue de 627 px) ; carte dans un
+   carré intérieur de 290 px sur fond noir à 0,36, liseré de la couleur du camp ; nom de la zone dessous, centré */
+.r3-radar { left: 0; top: 0; width: 300px; transform: scale(calc(var(--k) * 1.3)); transform-origin: 0 0; }
+.r3-radar-box { width: 300px; height: 300px; padding: 5px; box-sizing: border-box; }
+.r3-radar-map { display: block; width: 100%; height: 100%; background: rgb(0 0 0 / 0.36);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--wash) 60%, transparent); }
+.r3-radar-zone { display: block; height: 26px; overflow: hidden; font: 500 22px/26px var(--font-display); font-stretch: 85%;
+  text-align: center; white-space: nowrap; text-overflow: ellipsis; color: var(--wash); text-shadow: 0 1px 2px rgb(0 0 0 / 0.6); }
+
+/* barre de score : collée en haut au centre ; 5 cartes de 56 × 190 px de chaque côté, centre de 84 × 106 px */
+.r3-board { top: 0; left: 50%; display: flex; align-items: flex-start; padding-top: 2px; transform: translateX(-50%) scale(var(--k));
+  transform-origin: top center; }
+.r3-team { display: flex; }
+.r3-card { position: relative; width: 56px; height: 190px; overflow: hidden; --c: rgb(234 190 84); --c-name: rgb(255 208 99 / 0.87); }
+.r3-card.ct { --c: rgb(150 200 250); --c-name: rgb(167 227 255 / 0.87); }
+/* fond sous le portrait : noir qui s'éclaircit vers le bas ; joueur suivi : carte de la couleur du camp, gris en haut */
+.r3-card::before { content: ""; position: absolute; left: 1px; right: 1px; top: 14px; bottom: 0; background: linear-gradient(rgb(0 0 0 / 0.8), rgb(0 0 0 / 0.12)); }
+.r3-card.me { border-radius: 0 0 10px 10px; background: color-mix(in srgb, var(--c) 84%, transparent); }
+.r3-card.me::before { background: linear-gradient(rgb(85 85 85 / 0.92), rgb(85 85 85 / 0.85) 30%, transparent); }
+.r3-card.dead { height: 115px; }
+.r3-card.dead::before { background: rgb(0 0 0 / 0.47); }
+.r3-card > * { position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: center; }
+.r3-card .wicon, .r3-card .hud-gear, .r3-card .hud-nade { color: #fff; }
+.r3-card-name { top: 0; left: 1px; right: 1px; display: block; height: 14px; overflow: hidden; padding: 0 1px; background: rgb(0 0 0 / 0.52);
+  font: 300 14px/14px var(--font-display); font-stretch: 70%; letter-spacing: 0.5px; text-align: center; white-space: nowrap;
+  color: var(--c-name); }
+.r3-card-face { top: 16px; left: 1px; right: auto; width: 54px; height: 54px; box-sizing: border-box; align-items: flex-end;
+  border: 2px solid var(--c); background: #11151c; color: rgb(255 255 255 / 0.28); }
+.r3-face { display: block; width: 44px; height: 44px; }
+.r3-card.dead .r3-card-face { opacity: 0.2; }
+.r3-card-hp { top: 72px; left: 2px; right: auto; width: 52px; height: 14px; justify-content: flex-start;
+  background: linear-gradient(270deg, transparent, rgb(255 0 0) 50%, rgb(255 0 0)); }
+.r3-card-hp i { position: absolute; inset: 0; background: #fff; transform-origin: left; }
+.r3-card-hp b { position: relative; padding-left: 2px; font: 700 14px/14px var(--font-mono); letter-spacing: var(--r3-mono-tight); color: #000; }
+.r3-card-kills { top: 89px; height: 11px; gap: 1px; }
+.r3-skull { display: block; width: 10px; height: 11px; }
+.r3-card-money { top: 102px; height: 20px; font: 700 17px/20px var(--font-mono); letter-spacing: var(--r3-mono-tight); }
+.r3-card.dead .r3-card-money { color: #ddd; }
+.r3-card-gun { top: 124px; height: 16px; }
+.r3-card-nades { top: 144px; height: 16px; gap: 2px; }
+.r3-card-gear { top: 164px; height: 16px; gap: 4px; }
+.r3-card-gear .hud-gear { width: 16px; height: 16px; }
+/* centre : horloge, score, joueurs en vie, sur fond noir à 0,725 ; la bombe posée prend la place de l'horloge */
+.r3-mid { display: grid; grid-template-rows: 33px 29px 1fr; justify-items: center; width: 84px; height: 106px; background: rgb(0 0 0 / 0.725); }
+.r3-clock { display: flex; align-items: center; justify-content: center; font: 700 28px/33px var(--font-display); }
+.r3-clock-c4 { color: rgb(230 40 40); animation: r3-pulse 0.9s ease-in-out infinite alternate; }
+@keyframes r3-pulse { to { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .r3-clock-c4 { animation: none; } }
+.r3-scores, .r3-alives { display: grid; grid-template-columns: 1fr 1fr; width: 100%; align-items: center; }
+.r3-score { text-align: center; font: 700 28px/29px var(--font-display); }
+.r3-alive { display: flex; align-items: center; justify-content: center; gap: 2px; font: 700 16px/1 var(--font-display); }
+.r3-score.ct, .r3-alive.ct { color: rgb(181 212 238); }
+.r3-score.t, .r3-alive.t { color: rgb(234 209 138); }
+.r3-person { display: block; width: 9px; height: 11px; }
+/* « POV n » : sous le centre ; sa place suit l'échelle, pas sa taille */
+.r3-pov-label { position: absolute; top: 112px; left: 50%; padding: 3px 7px; border: 1px solid rgb(255 255 255 / 0.28); border-radius: 4px;
+  background: rgb(4 6 9 / 0.62); font: 800 10px/13px var(--font-mono); letter-spacing: 0.8px; color: rgb(255 255 255 / 0.82);
+  white-space: nowrap; transform: translateX(-50%) scale(calc(1 / var(--k))); transform-origin: top center; }
+
+/* fil des kills : en haut à droite, 72 px sous le haut ; lignes de 32 px, fond noir à 0,36 ; kills du joueur suivi : fond à
+   0,66 et cadre rouge de 2 px */
+.r3-kills { top: calc(72px * var(--k)); right: calc(9px * var(--k)); display: flex; flex-direction: column; align-items: flex-end; gap: 2px;
+  transform: scale(var(--k)); transform-origin: top right; }
+.r3-kill { display: flex; align-items: center; gap: 4px; height: 32px; box-sizing: border-box; padding: 3px 10px 0; border-radius: 3px;
+  background: rgb(0 0 0 / 0.36); font: 700 16px/1 var(--font-display); white-space: nowrap; }
+.r3-kill.mine { background: rgb(0 0 0 / 0.66); box-shadow: inset 0 0 0 2px rgb(225 0 0); }
+.r3-kill-name.t { color: rgb(234 190 84); }
+.r3-kill-name.ct { color: rgb(111 156 230); }
+.r3-kill-gun, .r3-kill-flash, .r3-kill-plus { color: #fff; }
+.r3-kill-weapon { font-size: 13px; color: #ccc; }
+.r3-mark { display: block; flex: none; width: 22px; height: 22px; color: #fff; }
+
+/* armes : à droite ; 1, 2, 3 empilées (76 px), en bas 5 (C4) puis 4 (grenades côte à côte), 10 px au-dessus du bord ;
+   icônes tournées vers la gauche, teinte du camp à 0,8 ; celle en main pleine, plus claire, son nom dessous */
+.r3-slots { right: 0; bottom: calc(10px * var(--k)); display: flex; flex-direction: column; align-items: flex-end; transform: scale(var(--k));
+  transform-origin: bottom right; }
+.r3-slot { position: relative; display: flex; align-items: flex-start; justify-content: flex-end; height: 76px; padding-right: 27px; }
+.r3-slot-items { display: flex; align-items: flex-end; gap: 6px; margin-top: 2px; }
+.r3-slot-item { display: flex; align-items: flex-end; color: var(--tint); opacity: 0.8; }
+.r3-slot-item .wicon { transform: scaleX(-1); }
+.r3-slot-item.held { color: var(--tint-on); opacity: 1; }
+.r3-slot-item small { margin-left: -2px; font: 700 15px/1 var(--font-display); color: #fff; }
+.r3-slot-n { position: absolute; top: 0; right: 9px; font: 700 16px/1 var(--font-mono); color: #fff; }
+.r3-slot-label { position: absolute; top: 54px; right: 27px; font: 300 16px/1 var(--font-display); white-space: nowrap; color: #fff; }
+.r3-slots-low { display: flex; align-items: flex-end; }
+.r3-slots-low .r3-slot { height: 74px; }
+.r3-slot-items .r3-pip { display: block; width: 8px; height: 8px; margin: 0 9px 16px; border-radius: 50%; background: rgb(0 0 0 / 0.7);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12); }
+
+/* argent : en bas à gauche */
+.r3-money { left: calc(16px * var(--k)); bottom: calc(22px * var(--k)); font: 700 38px/1 var(--font-mono); letter-spacing: -0.1em;
+  color: var(--wash);
+  transform: scale(var(--k)); transform-origin: bottom left; }
+
+/* bas au centre : bloc de 800 × 72 px, 16 px au-dessus du bord ; bandeau de 460 px (fond noir à 0,36, filets de la couleur
+   du camp) entre la vie (à gauche) et les munitions (à droite) ; portrait au centre */
+.r3-bottom { left: 50%; bottom: calc(16px * var(--k)); width: 800px; height: 72px; transform: translateX(-50%) scale(var(--k));
+  transform-origin: bottom center; }
+.r3-bottom::before { content: ""; position: absolute; top: 0; bottom: 0; left: 169px; width: 460px; box-sizing: border-box;
+  border-inline: 1px solid var(--wash); background: rgb(0 0 0 / 0.36); }
+.r3-vitals, .r3-ammo { position: absolute; inset: 0; color: var(--wash); }
+.r3-armor { position: absolute; left: 52px; top: 12px; display: grid; place-items: center; width: 46px; height: 50px; }
+.r3-armor svg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--wash); }
+.r3-armor b { position: relative; margin-top: 12px; font: 500 17px/1 var(--font-display); }
+.r3-hp { position: absolute; left: 100px; top: 9px; display: grid; justify-items: center; width: 68px; }
+.r3-hp b { font: 600 46px/46px var(--font-display); }
+.r3-hp-bar { display: block; width: 65px; height: 7px; margin-top: 3px; overflow: hidden;
+  background: linear-gradient(270deg, rgb(255 0 0 / 0.1), rgb(255 0 0) 50%, rgb(255 0 0)); }
+.r3-hp-bar i { display: block; height: 100%; background: var(--wash); transform-origin: left; }
+.r3-who { position: absolute; left: 184px; top: 14px; display: grid; gap: 4px; max-width: 180px; }
+.r3-who-name { display: flex; align-items: center; gap: 5px; overflow: hidden; font: 700 20px/1 var(--font-display); white-space: nowrap; }
+.r3-who-name .hud-gear { width: 16px; height: 16px; color: var(--wash); }
+.r3-adr { font: 200 13px/1 var(--font-display); }
+.r3-adr b { margin-left: 3px; font: 700 13px/1 var(--font-mono); color: #ccc; }
+.r3-avatar { position: absolute; left: 368px; top: 4px; display: grid; place-items: end center; width: 64px; height: 64px; overflow: hidden;
+  box-sizing: border-box; border: 3px solid var(--wash); border-radius: 50%; background: rgb(0 0 0 / 0.36); color: rgb(255 255 255 / 0.3); }
+.r3-avatar .r3-face { width: 46px; height: 46px; }
+.r3-weapon { position: absolute; right: 185px; top: 18px; display: grid; justify-items: end; gap: 4px; max-width: 180px; }
+.r3-weapon-name { font: 500 18px/1 var(--font-display); white-space: nowrap; color: #ccc; }
+.r3-skin { min-height: 15px; font: 500 15px/1 var(--font-display); }
+.r3-ammo-count { position: absolute; left: 632px; top: 9px; display: flex; align-items: flex-start; }
+.r3-ammo-n { position: relative; display: block; width: 71px; padding-bottom: 6px; text-align: center; font: 600 46px/46px var(--font-display); }
+.r3-ammo-n::after, .r3-clip-bar { content: ""; position: absolute; left: 3px; right: 3px; bottom: 0; height: 3px; }
+.r3-ammo-n::after { background: rgb(255 255 255 / 0.1); }
+.r3-clip-bar { z-index: 1; background: var(--wash); transform-origin: left; }
+.r3-ammo-n.empty { color: rgb(235 60 60); }
+.r3-reserve { display: flex; align-items: center; gap: 3px; margin: 8px 0 0 4px; font: 600 32px/1 var(--font-display); }
+.r3-mag { display: block; width: 10px; height: 17px; }
+
+/* fin du round : bandeau du camp vainqueur sous la barre de score */
+.r3-win { top: calc(190px * var(--k)); left: 50%; padding: 12px 36px; font: 700 49px/1 var(--font-display); font-stretch: 80%;
+  text-transform: uppercase; white-space: nowrap; transform: translateX(-50%) scale(var(--k)); transform-origin: top center; }
+.r3-win.t { background: rgb(66 46 8 / 0.85); color: rgb(234 190 84); }
+.r3-win.ct { background: rgb(12 34 58 / 0.85); color: rgb(150 200 250); }
+.r3-win span::before { content: "» "; }
+.r3-win span::after { content: " «"; }
+
+/* la page en vue du joueur (HUD affiché) : rien ne se pose sur la vue. Le fil des kills de la page est
+   remplacé par celui du HUD. La barre des caméras et la bande des tactiques restent à leur place mais transparentes et sans
+   clics (aucun bouton invisible ne prend un clic destiné à la vue) ; elles reviennent quand la souris s'en approche
+   (`data-near-bar` / `data-near-strip`, posés par Scene3D d'après les mouvements de la souris sur toute la zone de la vue)
+   ou au clavier (focus visible, pas celui d'un clic, sinon la barre resterait affichée après le choix de la caméra). Même
+   condition pour les deux : un HUD affiché. Écrans tactiles (pas de survol) : toujours visibles, un toucher ne doit pas
+   changer de caméra à l'aveugle. */
+.rp-radar:has(.r3-cs) .killfeed { display: none; }
+@media (hover: hover) {
+  .r3-scene:has(.r3-cs):not([data-near-bar]) .r3-bar:not(:has(:focus-visible)),
+  .rp-radar:has(.r3-scene:not([data-near-strip]) .r3-cs) .rp-strip:not(:has(:focus-visible)) { opacity: 0; pointer-events: none; }
+  .r3-scene:has(.r3-cs) .r3-bar, .rp-radar:has(.r3-cs) .rp-strip { transition: opacity var(--dur-2) var(--ease-out); }
+}

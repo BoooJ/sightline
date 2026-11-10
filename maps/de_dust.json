@@ -1,0 +1,25 @@
+{
+  "name": "de_dust",
+  "display_name": "Dust",
+  "pos_x": -2850.0,
+  "pos_y": 4073.0,
+  "scale": 6.0,
+  "image": "de_dust.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "de_dust.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": [
+    0.8,
+    0.55
+  ],
+  "bomb_b": [
+    0.53,
+    0.74
+  ],
+  "active_duty": false
+}

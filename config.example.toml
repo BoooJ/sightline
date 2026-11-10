@@ -1,0 +1,10 @@
+# Copier en config.toml pour personnaliser. Toutes les clés sont optionnelles.
+# demo_folders = ["C:/Program Files (x86)/Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo"]
+sample_rate = 32          # images/s gardées pour le replay (ré-analyser les démos après changement)
+max_parallel_imports = 2
+port = 8000
+trade_window_s = 5.0
+eco_max = 5000
+semi_max = 10000
+force_max = 20000
+modules = []

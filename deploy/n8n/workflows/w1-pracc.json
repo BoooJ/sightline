@@ -1,0 +1,676 @@
+{
+  "id": "sightlineW1prac1",
+  "name": "W1 · PRACC → Sightline",
+  "active": false,
+  "nodes": [
+    {
+      "id": "b1000000-0000-4000-8000-000000000001",
+      "name": "Extension PRACC",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pracc",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredExtPracc01",
+          "name": "Extension PRACC"
+        }
+      },
+      "webhookId": "8b3c2d1e-4f5a-4b6c-9d7e-0f1a2b3c4d5e"
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000002",
+      "name": "Étape ?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 5,
+        "output": "={{ ({ import: 1, calendar: 2, 'faceit-wanted': 3, 'faceit-links': 4 })[$json.body && $json.body.step] || 0 }}"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000003",
+      "name": "Hors backup",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        -160
+      ],
+      "parameters": {
+        "jsCode": "// Le backup OVH gèle le disque vers 06:00 UTC : aucun import entre 05:00 et 07:30 UTC (un tour lancé à 05:30 pourrait\n// encore analyser quand le disque gèle). Toujours une sortie : l'extension attend une réponse.\nconst now = new Date($input.first().json.timestamp ?? Date.now());\nconst minutes = now.getUTCHours() * 60 + now.getUTCMinutes();\nconst sent = $input.first().json.body || {}; // envoi de l'extension : { step, statusCode, body } (réponse de PRACC)\nreturn [{ json: { quiet: minutes >= 5 * 60 && minutes < 7 * 60 + 30, statusCode: sent.statusCode, body: sent.body } }];\n"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000004",
+      "name": "Calme ?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        660,
+        -160
+      ],
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 2,
+        "output": "={{ $json.quiet ? 0 : 1 }}"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000005",
+      "name": "Répondre · plus tard",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        880,
+        -320
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"fetch\": [], \"quiet\": true}",
+        "options": {}
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000006",
+      "name": "Trier",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        -160
+      ],
+      "parameters": {
+        "jsCode": "// Réponse de PRACC relayée par l'extension : 401/403 = session expirée, sinon la liste des démos du serveur.\nconst res = $input.first().json;\nif (res.statusCode === 401 || res.statusCode === 403) return [{ json: { expired: true, status: res.statusCode } }];\n// PRACC répond en application/vnd.pracc.v1+json : n8n peut laisser le corps en texte\nlet body = res.body;\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch { /* pas du JSON : traité comme une erreur ci-dessous */ } }\nif (res.statusCode !== 200 || !Array.isArray(body)) throw new Error(`PRACC a répondu ${res.statusCode}`);\ndelete $getWorkflowStaticData('global').praccAlertAt; // session valide : la prochaine expiration sera signalée\n// notre équipe : celle qui apparaît dans le plus de pracs (hôte ou invitée)\nconst seen = {};\nfor (const d of body) for (const t of [d.Team, d.OtherTeam]) if (t && t.ID != null) seen[t.ID] = (seen[t.ID] || 0) + 1;\nconst us = Number(Object.entries(seen).sort((a, b) => b[1] - a[1])[0]?.[0]);\nif (Number.isFinite(us)) $getWorkflowStaticData('global').praccTeamId = us; // relu par l'étape calendrier\n// l'extension n'ouvre que des liens pracc.com (sa session) : lien relatif ou https://pracc.com/…, sinon la démo est ignorée\nconst onPracc = (u) => /^\\/(?!\\/)/.test(u) || u.startsWith('https://pracc.com/');\n// pas d'arriéré : seulement les pracs créés après la mise en service (choix du 23/10) ; une date illisible = ignorée\nconst since = Date.parse('2026-10-23T02:45:00Z');\nconst demos = body\n  .filter((d) => d.Uploaded && d.Uid && d.DownloadUrl && onPracc(String(d.DownloadUrl)) && Date.parse(d.CreatedAt) >= since)\n  .sort((a, b) => String(b.CreatedAt).localeCompare(String(a.CreatedAt)))\n  .slice(0, 200) // /api/integrations/known accepte 500 identifiants au plus\n  .map((d) => {\n    const them = d.Team && Number(d.Team.ID) !== us ? d.Team : d.OtherTeam;\n    const path = String(d.DownloadUrl);\n    return { uid: String(d.Uid), downloadUrl: path.startsWith('/') ? `https://pracc.com${path}` : path,\n             createdAt: d.CreatedAt, opponent: them?.Name || '' };\n  });\nreturn [{ json: { expired: false, uids: demos.map((d) => d.uid), demos } }];\n"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000007",
+      "name": "Session expirée ?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1100,
+        -160
+      ],
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 2,
+        "output": "={{ $json.expired ? 0 : 1 }}"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000008",
+      "name": "Répondre · session expirée",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1320,
+        -480
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"fetch\": [], \"expired\": true}",
+        "options": {}
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000009",
+      "name": "Alerte (1 par jour)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        -320
+      ],
+      "parameters": {
+        "jsCode": "// Une alerte par jour au plus : inutile de répéter toutes les 30 minutes que la session a expiré.\nconst state = $getWorkflowStaticData('global');\nconst now = Date.now();\nif (state.praccAlertAt && now - state.praccAlertAt < 24 * 3600 * 1000) return [];\nstate.praccAlertAt = now;\nreturn [{ json: { content: '🔑 Session PRACC expirée : reconnecte-toi à pracc.com dans Chrome, l\\'extension Sightline reprendra toute seule.' } }];\n"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000010",
+      "name": "Discord · session",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        -320
+      ],
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.content }}",
+        "options": {}
+      },
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "slCredDiscord001",
+          "name": "Discord Sightline"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000011",
+      "name": "Sightline : déjà importés ?",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        -160
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://sightline.example.com/api/integrations/known",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ source: 'pracc', ids: $json.uids }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000012",
+      "name": "À récupérer (3 max)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        -160
+      ],
+      "parameters": {
+        "jsCode": "// Seulement les pracs que Sightline n'a pas, 3 par tour au plus : une seule analyse à la fois sur le serveur.\n// Une seule sortie, même vide : c'est la réponse à l'extension.\nconst known = new Set($input.first().json.known || []);\nreturn [{ json: { fetch: $('Trier').first().json.demos.filter((d) => !known.has(d.uid)).slice(0, 3) } }];\n"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000013",
+      "name": "Répondre · à récupérer",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1760,
+        -160
+      ],
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {}
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000014",
+      "name": "Répondre · reçu",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        440,
+        80
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"ok\": true}",
+        "options": {}
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000015",
+      "name": "Préparer l'import",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        240
+      ],
+      "parameters": {
+        "jsCode": "// L'extension a suivi la redirection de PRACC : storageUrl est le lien de stockage signé (valable peu de temps : l'import\n// part tout de suite). Une démo sans lien https est ignorée ce tour-ci et redemandée au suivant.\nconst items = $input.first().json.body?.items;\nconst out = [];\nfor (const d of Array.isArray(items) ? items.slice(0, 3) : []) {\n  let url;\n  try { url = new URL(String(d.storageUrl)); } catch { continue; }\n  if (url.protocol !== 'https:' || !d.uid) continue;\n  const opponent = String(d.opponent || '').slice(0, 64); // une étiquette fait 64 caractères au plus\n  const created = new Date(d.createdAt);\n  out.push({ json: {\n    url: url.href, source: 'pracc', external_id: String(d.uid),\n    label: { folder: 'PRACC', played_on: Number.isNaN(created.getTime()) ? null : created.toISOString().slice(0, 10),\n             tags: ['pracc', opponent].filter(Boolean), opponent },\n  } });\n}\nreturn out;\n"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000016",
+      "name": "Importer dans Sightline",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://sightline.example.com/api/integrations/import",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000017",
+      "name": "Répondre · calendrier",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        440,
+        400
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"ok\": true}",
+        "options": {}
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000018",
+      "name": "Calendrier PRACC",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        560
+      ],
+      "parameters": {
+        "jsCode": "// Calendrier PRACC relayé par l'extension (GET /api/matches) : les matchs ESEA (Events) et les pracs réservés (Matches),\n// envoyés à Sightline, qui remplace ses événements PRACC à venir. Session expirée ou réponse inattendue : rien n'est\n// envoyé, pour ne jamais vider le calendrier par erreur.\nconst sent = $input.first().json.body || {};\nconst body = sent.body;\nif (sent.statusCode !== 200 || !body || !Array.isArray(body.Events) || !Array.isArray(body.Matches)) return [];\nconst us = Number($getWorkflowStaticData('global').praccTeamId);\nconst vs = (title) => (String(title || '').split(/\\bvs\\.?\\s+/i)[1] || '').trim();\nconst events = [];\nfor (const e of body.Events) {\n  if (!e || e.ID == null || !e.Time) continue;\n  events.push({ external_id: `event-${e.ID}`, kind: /esea|faceit|league|cup/i.test(String(e.ExternalSource || '')) ? 'match' : 'other',\n                title: String(e.Title || 'Événement PRACC').slice(0, 120), opponent: vs(e.Title).slice(0, 128), starts_at: e.Time,\n                notes: [e.Description, e.ExternalUrl].filter(Boolean).join('\\n').slice(0, 5000) });\n}\nfor (const m of body.Matches) {\n  const time = m && (m.Time || m.Date || m.StartTime || m.StartsAt);\n  if (!m || m.ID == null || !time) continue;\n  // les deux équipes du prac, où qu'elles soient rangées ; l'adversaire est celle qui n'est pas la nôtre\n  const teams = [...Object.values(m), ...(Array.isArray(m.Teams) ? m.Teams : [])]\n    .filter((t) => t && typeof t === 'object' && !Array.isArray(t) && t.ID != null && t.Name);\n  const them = teams.find((t) => Number(t.ID) !== us);\n  const opponent = String(them?.Name || '').slice(0, 128);\n  events.push({ external_id: `match-${m.ID}`, kind: 'scrim', title: (opponent ? `Prac vs. ${opponent}` : 'Prac PRACC').slice(0, 120),\n                opponent, starts_at: time, notes: '' });\n}\nreturn [{ json: { source: 'pracc', events } }];\n"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000019",
+      "name": "Sightline : calendrier",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        560
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://sightline.example.com/api/integrations/calendar",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000020",
+      "name": "Sightline : démos FACEIT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        720
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://sightline.example.com/api/integrations/faceit-wanted",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({}) }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000021",
+      "name": "Répondre · démos FACEIT",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        660,
+        720
+      ],
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {}
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000022",
+      "name": "Sightline : liens FACEIT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        880
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://sightline.example.com/api/integrations/faceit-links",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000023",
+      "name": "Répondre · liens FACEIT",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        660,
+        880
+      ],
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {}
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000024",
+      "name": "Alerte FACEIT (1 par jour)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        1040
+      ],
+      "parameters": {
+        "jsCode": "// L'extension n'est pas connectée à FACEIT : les démos demandées attendent. Une alerte par jour au plus ; une démo\n// récupérée efface l'alerte (la prochaine déconnexion sera signalée).\nconst r = $input.first().json;\nconst state = $getWorkflowStaticData('global');\nif (r.status === 'started') delete state.faceitLoginAt;\nif (r.status !== 'login') return [];\nconst now = Date.now();\nif (state.faceitLoginAt && now - state.faceitLoginAt < 24 * 3600 * 1000) return [];\nstate.faceitLoginAt = now;\nreturn [{ json: { content: '🔑 Démos FACEIT en attente : connecte-toi à faceit.com dans Chrome, l\\'extension Sightline les récupérera toute seule.' } }];\n"
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-000000000025",
+      "name": "Discord · FACEIT",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        880,
+        1040
+      ],
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.content }}",
+        "options": {}
+      },
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "slCredDiscord001",
+          "name": "Discord Sightline"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    }
+  ],
+  "connections": {
+    "Extension PRACC": {
+      "main": [
+        [
+          {
+            "node": "Étape ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Étape ?": {
+      "main": [
+        [
+          {
+            "node": "Hors backup",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre · reçu",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Préparer l'import",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre · calendrier",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Calendrier PRACC",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sightline : démos FACEIT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sightline : liens FACEIT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sightline : démos FACEIT": {
+      "main": [
+        [
+          {
+            "node": "Répondre · démos FACEIT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sightline : liens FACEIT": {
+      "main": [
+        [
+          {
+            "node": "Répondre · liens FACEIT",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Alerte FACEIT (1 par jour)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alerte FACEIT (1 par jour)": {
+      "main": [
+        [
+          {
+            "node": "Discord · FACEIT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calendrier PRACC": {
+      "main": [
+        [
+          {
+            "node": "Sightline : calendrier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hors backup": {
+      "main": [
+        [
+          {
+            "node": "Calme ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calme ?": {
+      "main": [
+        [
+          {
+            "node": "Répondre · plus tard",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Trier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trier": {
+      "main": [
+        [
+          {
+            "node": "Session expirée ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Session expirée ?": {
+      "main": [
+        [
+          {
+            "node": "Répondre · session expirée",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Alerte (1 par jour)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sightline : déjà importés ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alerte (1 par jour)": {
+      "main": [
+        [
+          {
+            "node": "Discord · session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sightline : déjà importés ?": {
+      "main": [
+        [
+          {
+            "node": "À récupérer (3 max)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "À récupérer (3 max)": {
+      "main": [
+        [
+          {
+            "node": "Répondre · à récupérer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer l'import": {
+      "main": [
+        [
+          {
+            "node": "Importer dans Sightline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "errorWorkflow": "sightlineW0err01"
+  },
+  "pinData": {}
+}

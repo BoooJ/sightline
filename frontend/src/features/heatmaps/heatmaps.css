@@ -1,0 +1,21 @@
+.hm-kinds { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.hm-range { width: 100%; accent-color: var(--accent); }
+.hm-check { display: flex; align-items: center; gap: 8px; color: var(--fg-1); font-size: var(--fs-sm); }
+.hm-check input { accent-color: var(--accent); }
+
+.hm-stage { width: min(100%, calc(100vh - 32px)); aspect-ratio: 1; position: relative; overflow: hidden; cursor: grab; user-select: none; }
+.hm-stage:active { cursor: grabbing; }
+.hm-inner { position: absolute; inset: 0; transition: transform var(--dur-1) var(--ease-out); transform-origin: center; }
+.hm-radar, .hm-canvas, .hm-points { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hm-radar { filter: saturate(.55) brightness(.8); user-select: none; }
+.hm-canvas { mix-blend-mode: screen; }
+.hm-points circle { stroke: #000; stroke-width: 1; }
+.hm-points circle.ct { fill: var(--ct); } .hm-points circle.t { fill: var(--t); }
+
+.hm-legend { position: absolute; bottom: var(--sp-3); right: var(--sp-3); z-index: 2; display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; background: rgb(0 0 0 / .55); border: 1px solid var(--line); border-radius: var(--radius-sm); font: 600 var(--fs-xs) var(--font-ui); color: var(--fg-1); }
+.hm-legend i { width: 120px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--ct), #555 50%, var(--t)); }
+.hm-legend.heat i { background: linear-gradient(90deg, rgb(30 60 200), rgb(40 200 160), rgb(230 230 60), rgb(255 140 30), rgb(255 40 40)); }
+.hm-ct { color: var(--ct); } .hm-t { color: var(--t); }
+.hm-help { color: var(--fg-1); font-size: var(--fs-sm); line-height: 1.55; }
+.hm-help p { margin: 0 0 var(--sp-3); }

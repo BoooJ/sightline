@@ -1,0 +1,56 @@
+:root {
+  /* surfaces — noir bleuté très dense */
+  --bg-0: #0c0f12;      /* fond appli */
+  --bg-1: #12161a;      /* panneaux, barre latérale */
+  --bg-2: #181d22;      /* cartes, lignes, champs */
+  --bg-3: #20262d;      /* survol, pilules */
+  --bg-4: #29303a;      /* survol des boutons posés sur --bg-3 */
+  --line: #1f252c;
+  --line-strong: #2c343d;
+  /* texte — --fg-2 tient 4,5:1 sur toutes les surfaces (6,31 / 5,97 / 5,57 / 5,01 sur --bg-0..3) */
+  --fg-0: #eef2f5;
+  --fg-1: #a4adb7;
+  --fg-2: #8a95a1;
+  /* accents — vert menthe : action, sélection, état actif */
+  --accent: #2ee6a6;
+  --accent-strong: #1fcf91;
+  --accent-dim: rgba(46, 230, 166, 0.12);
+  --on-accent: #04170f;
+  --accent-deep: #1aa67c;   /* menthe foncé : seconde nuance du thème quand le menthe est déjà pris dans la même légende */
+  /* camps : réservés au CT et au T, jamais pour une autre signification */
+  --ct: #5b9dff;
+  --ct-dim: rgba(91, 157, 255, 0.18);
+  --t: #f0b03a;
+  --t-dim: rgba(240, 176, 58, 0.18);
+  /* équipes (A = la première du match / la vôtre, B = l'adversaire) : le vert d'origine du graphique d'économie et un gris
+     clair neutre — jamais de violet, ni couleur de camp, ni rouge d'erreur */
+  --team-a: var(--accent-deep);
+  --team-b: #c3cad3;
+  /* états */
+  --ok: #2ee6a6;
+  --warn: #e6b450;
+  --error: #ef5f67;
+  --on-error: #200709;
+  /* grenades (couleurs de données) */
+  --smoke: #c9d1dc;
+  --fire: #ff6a2b;
+  --flash: #fff6c2;
+  --he: #ff3b3b;
+  /* typo */
+  --font-ui: "Inter", system-ui, sans-serif;
+  --font-display: "Saira Variable", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --fs-xs: 11px; --fs-sm: 12px; --fs-md: 13px; --fs-lg: 16px; --fs-xl: 22px; --fs-xxl: 30px;
+  /* espacements et rayons */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+  --radius-xs: 3px; --radius-sm: 5px; --radius-md: 8px; --radius-lg: 12px;
+  --shadow-1: 0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 24px rgba(0,0,0,0.4);
+  /* mouvement : ease-out pour entrer / sortir, ease-in-out pour déplacer ; jamais ease-in */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-1: 140ms;   /* appui, survol, couleur */
+  --dur-2: 180ms;   /* panneaux flottants, menus */
+  --dur-3: 240ms;   /* déplacements, dialogues */
+  --header-h: 48px;
+  --sidebar-w: 200px;
+}

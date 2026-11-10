@@ -1,0 +1,21 @@
+#pragma code_page(65001)
+#include <windows.h>
+#include "resource.h"
+
+IDD_SETTINGS DIALOGEX 0, 0, 320, 200
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Sightline Comms — Réglages"
+FONT 9, "Segoe UI"
+BEGIN
+    LTEXT           "Adresse de Sightline", -1, 10, 10, 300, 10
+    EDITTEXT        IDC_SITE, 10, 22, 300, 14, ES_AUTOHSCROLL
+    LTEXT           "Clé d'API (portée « comms », créée dans Sightline › Équipe › Accès API)", -1, 10, 44, 300, 10
+    EDITTEXT        IDC_KEY, 10, 56, 240, 14, ES_AUTOHSCROLL | ES_PASSWORD
+    PUSHBUTTON      "Tester", IDC_TEST, 256, 55, 54, 16
+    LTEXT           "", IDC_KEYSTATE, 10, 74, 300, 18
+    LTEXT           "Dossier cfg de CS2 (le fichier de la Game State Integration y est installé)", -1, 10, 98, 300, 10
+    EDITTEXT        IDC_CFG, 10, 110, 300, 14, ES_AUTOHSCROLL
+    LTEXT           "", IDC_STATUS, 10, 132, 300, 32
+    DEFPUSHBUTTON   "Enregistrer", IDOK, 196, 176, 54, 16
+    PUSHBUTTON      "Annuler", IDCANCEL, 256, 176, 54, 16
+END

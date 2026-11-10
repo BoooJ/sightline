@@ -1,0 +1,353 @@
+{
+  "id": "sightlineW2disc1",
+  "name": "W2 · Sightline → Discord",
+  "active": false,
+  "nodes": [
+    {
+      "id": "c2000000-0000-4000-8000-000000000001",
+      "name": "Sightline",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sightline",
+        "authentication": "jwtAuth",
+        "options": {}
+      },
+      "credentials": {
+        "jwtAuth": {
+          "id": "slCredSlHook0001",
+          "name": "Sightline webhook"
+        }
+      },
+      "webhookId": "5f0c1d2e-3a4b-4c5d-8e6f-7a8b9c0d1e2f"
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000002",
+      "name": "Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Un message par événement Sightline. « Match analysé » d'un match de notre équipe passe par Claude, qui écrit le\n// débrief ; le match d'une autre équipe (scouting) n'a qu'une ligne, sans appel à Claude.\nconst { event, data = {} } = $input.first().json.body || {};\nconst safe = (s) => String(s ?? '').replace(/@/g, '@' + String.fromCharCode(0x200b)); // pas de mention venue des données\nconst who = data.opponent ? `prac contre ${safe(data.opponent)}` : safe(data.file_name || 'une démo');\nconst texts = {\n  'demo.imported': `📥 Nouveau match importé : ${who}, analyse en cours.`,\n  'demo.failed': `⚠️ Import échoué${data.source ? ` (${safe(data.source)} ${safe(data.external_id)})` : ''} : ${safe(data.error || 'erreur inconnue')}`,\n  'comms.ready': `🎙 Comms ajoutées : ${safe(data.title)} · ${Number(data.tracks) || 0} ${Number(data.tracks) === 1 ? 'piste' : 'pistes'} TeamSpeak · ${data.url || `https://sightline.example.com${data.path || ''}`}`,\n  ping: '✅ Sightline est bien relié à n8n.',\n};\nif (event === 'match.ready') {\n  const [a, b] = data.teams || ['?', '?'];\n  const [sa, sb] = data.score || ['?', '?'];\n  const title = safe(`${a} ${sa}–${sb} ${b} · ${data.map_name || data.map}`);\n  const url = data.url || `https://sightline.example.com${data.path || ''}`;\n  if (!data.our_team) return [{ json: { isMatch: false, content: `🎯 Match analysé : ${title} · ${url}`.slice(0, 1900) } }];\n  return [{ json: { isMatch: true, match_id: data.match_id, kind: data.kind, our_team: data.our_team || null,\n    our_team_id: data.our_team_id ?? null,\n    title, url } }];\n}\nif (!texts[event]) return [];\nreturn [{ json: { isMatch: false, content: texts[event].slice(0, 1900) } }];\n"
+      }
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000003",
+      "name": "Match ?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 2,
+        "output": "={{ $json.isMatch ? 1 : 0 }}"
+      }
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000004",
+      "name": "Discord · message",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        680,
+        -160
+      ],
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.content }}",
+        "options": {}
+      },
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "slCredDiscord001",
+          "name": "Discord Sightline"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000005",
+      "name": "Débrief",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        80
+      ],
+      "parameters": {
+        "url": "=https://sightline.example.com/api/matches/{{ $('Message').first().json.match_id }}/debrief{{ $('Message').first().json.our_team_id ? '?team=' + $('Message').first().json.our_team_id : '' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000006",
+      "name": "Stats",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        80
+      ],
+      "parameters": {
+        "url": "=https://sightline.example.com/api/matches/{{ $('Message').first().json.match_id }}/stats",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000007",
+      "name": "Données du match",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        80
+      ],
+      "parameters": {
+        "jsCode": "// Débrief et stats du match, lus par n8n, en texte compact pour Claude : un seul appel, sans outils. Une partie\n// illisible (404, erreur) est omise.\nconst m = $('Message').first().json;\nconst part = (name, max) => {\n  const j = $(name).first().json;\n  return j && !j.error ? JSON.stringify(j).slice(0, max) : null;\n};\nconst debrief = part('Débrief', 12000);\nconst stats = part('Stats', 9000);\nconst lines = [`Match Sightline n°${m.match_id} : ${m.title}.`];\nif (m.our_team) lines.push(`Notre équipe, celle qui lit ce salon : ${m.our_team}. Le débrief ci-dessous est le sien.`);\nif (debrief) lines.push(`Débrief (JSON) : ${debrief}`);\nif (stats) lines.push(`Stats (JSON) : ${stats}`);\nlines.push('Écris le résumé.');\nreturn [{ json: { prompt: lines.join('\\n\\n') } }];\n"
+      }
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000008",
+      "name": "Résumé",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1340,
+        80
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "SystemMessagePromptTemplate",
+              "message": "Tu écris pour le salon Discord d'une équipe CS2. Réponds en français, en 3 lignes au plus, sans titre ni liste à puces : le fait marquant du match, ce qui a marché, ce qui a coûté des rounds. N'utilise que des chiffres présents dans les données fournies ; si une donnée manque, n'en parle pas. Quand notre équipe est indiquée, écris de son point de vue (« nous ») : ses points forts, puis ce qui lui a coûté des rounds. Ne répète pas le titre ni le score du match : ils sont déjà affichés au-dessus."
+            }
+          ]
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000011",
+      "name": "Claude Haiku",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.6,
+      "position": [
+        1340,
+        300
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "id",
+          "value": "claude-haiku-5-5"
+        },
+        "options": {
+          "maxTokensToSample": 600,
+          "temperature": 0.2,
+          "thinkingMode": "disabled"
+        }
+      },
+      "credentials": {
+        "anthropicApi": {
+          "id": "slCredAnthropic1",
+          "name": "Anthropic"
+        }
+      }
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000009",
+      "name": "Embed",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        80
+      ],
+      "parameters": {
+        "jsCode": "// Le résumé de Claude dans l'embed du match ; sans résumé si l'appel a échoué.\nconst m = $('Message').first().json;\nconst summary = String($input.first().json.text || '').trim();\nreturn [{ json: { content: '🎯 Match analysé', embed: {\n  title: String(m.title).slice(0, 256), url: m.url, color: 0x3ddc97,\n  description: (summary || 'Analyse terminée : replay, stats et débrief sont prêts.').replace(/@/g, '@' + String.fromCharCode(0x200b)).slice(0, 4000),\n  footer: { text: m.kind === 'practice' ? 'Prac · Sightline' : 'Officiel · Sightline' },\n} } }];\n"
+      }
+    },
+    {
+      "id": "c2000000-0000-4000-8000-000000000010",
+      "name": "Discord · match",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        80
+      ],
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.content }}",
+        "options": {},
+        "embeds": {
+          "values": [
+            {
+              "inputMethod": "json",
+              "json": "={{ JSON.stringify($json.embed) }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "slCredDiscord001",
+          "name": "Discord Sightline"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    }
+  ],
+  "connections": {
+    "Sightline": {
+      "main": [
+        [
+          {
+            "node": "Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message": {
+      "main": [
+        [
+          {
+            "node": "Match ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Match ?": {
+      "main": [
+        [
+          {
+            "node": "Discord · message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Débrief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Débrief": {
+      "main": [
+        [
+          {
+            "node": "Stats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stats": {
+      "main": [
+        [
+          {
+            "node": "Données du match",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Données du match": {
+      "main": [
+        [
+          {
+            "node": "Résumé",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Résumé": {
+      "main": [
+        [
+          {
+            "node": "Embed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embed": {
+      "main": [
+        [
+          {
+            "node": "Discord · match",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude Haiku": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Résumé",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "errorWorkflow": "sightlineW0err01"
+  },
+  "pinData": {}
+}

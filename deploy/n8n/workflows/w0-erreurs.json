@@ -1,0 +1,85 @@
+{
+  "id": "sightlineW0err01",
+  "name": "W0 · Erreurs → Discord",
+  "active": false,
+  "nodes": [
+    {
+      "id": "a0000000-0000-4000-8000-000000000001",
+      "name": "Erreur d'un workflow",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "a0000000-0000-4000-8000-000000000002",
+      "name": "Message d'erreur",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Message court pour Discord : quel workflow, sur quel nœud, quelle erreur.\nconst e = $input.first().json;\nconst wf = e.workflow?.name || 'Un workflow';\nconst node = e.execution?.lastNodeExecuted || '?';\nconst msg = e.execution?.error?.message || 'erreur inconnue';\nconst safe = (s) => String(s).replace(/@/g, '@' + String.fromCharCode(0x200b)); // pas de mention @everyone venue des données\nreturn [{ json: { content: safe(`⚙️ ${wf} a planté sur « ${node} » : ${msg}`).slice(0, 1900) } }];\n"
+      }
+    },
+    {
+      "id": "a0000000-0000-4000-8000-000000000003",
+      "name": "Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        480,
+        0
+      ],
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.content }}",
+        "options": {}
+      },
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "slCredDiscord001",
+          "name": "Discord Sightline"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    }
+  ],
+  "connections": {
+    "Erreur d'un workflow": {
+      "main": [
+        [
+          {
+            "node": "Message d'erreur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message d'erreur": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC"
+  },
+  "pinData": {}
+}

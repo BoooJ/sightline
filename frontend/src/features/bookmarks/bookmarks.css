@@ -1,0 +1,8 @@
+.bm-group { display: grid; gap: var(--sp-2); }
+.bm-head { display: flex; align-items: baseline; gap: var(--sp-3); }
+.bm-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.bm-list li { display: flex; align-items: center; gap: var(--sp-3); padding: 4px var(--sp-2); background: var(--bg-1); border-radius: var(--radius-sm); }
+.bm-list li > svg { color: var(--warn); }
+.bm-round { color: var(--fg-2); min-width: 34px; }
+.bm-label { flex: 1; height: 30px; padding: 0 8px; background: transparent; color: var(--fg-0); border: 1px solid transparent; border-radius: var(--radius-sm); font: inherit; }
+.bm-label:hover { border-color: var(--line); } .bm-label:focus { outline: none; border-color: var(--accent); background: var(--bg-0); }

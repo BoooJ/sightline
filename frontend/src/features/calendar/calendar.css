@@ -1,0 +1,54 @@
+.cal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--sp-4); align-items: start; }
+.cal-month { padding: var(--sp-3) var(--sp-4); display: grid; gap: var(--sp-2); }
+.cal-head { display: flex; align-items: center; gap: var(--sp-2); }
+.cal-title { margin: 0 var(--sp-2); font: 700 var(--fs-lg) var(--font-display); text-transform: capitalize; min-width: 180px; text-align: center; }
+.cal-head > :last-child { margin-left: auto; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.cal-dow { font: 600 var(--fs-xs) var(--font-ui); text-transform: uppercase; letter-spacing: .1em; color: var(--fg-2); padding: 4px 6px; }
+.cal-day { min-height: 104px; background: var(--bg-1); border-radius: var(--radius-sm); padding: 4px; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cal-day.out { opacity: .45; }
+.cal-day.today { box-shadow: inset 0 0 0 1px var(--accent); }
+.cal-num { font: 600 var(--fs-xs) var(--font-mono); color: var(--fg-2); padding: 0 2px; }
+.cal-day.today .cal-num { color: var(--accent); }
+.cal-ev { display: block; width: 100%; text-align: left; border: 0; border-left: 3px solid var(--fg-2); background: var(--bg-2); color: var(--fg-0);
+  font-size: 11px; padding: 3px 5px; border-radius: var(--radius-xs); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: relative; }
+.cal-ev:hover { background: var(--bg-3); }
+.cal-ev .mono { color: var(--fg-2); }
+.cal-match { border-left-color: var(--accent) !important; } .cal-scrim { border-left-color: var(--fg-0) !important; }
+.cal-tournament { border-left-color: var(--warn) !important; } .cal-practice { border-left-color: var(--fg-1) !important; }
+.cal-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-left: 4px; vertical-align: middle; }
+.cal-played { display: block; font-size: var(--fs-xs); color: var(--fg-2); padding: 2px 5px; border: 1px dashed var(--line-strong); border-radius: var(--radius-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cal-played:hover { color: var(--fg-0); }
+.cal-side { padding: var(--sp-3) var(--sp-4); display: grid; gap: var(--sp-2); }
+.cal-up { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.cal-up button { display: grid; gap: 2px; width: 100%; text-align: left; background: var(--bg-1); border: 0; border-radius: var(--radius-sm); padding: 8px 10px; color: var(--fg-0); cursor: pointer; }
+.cal-up button:hover { background: var(--bg-2); }
+.cal-kind { justify-self: start; font: 700 var(--fs-xs) var(--font-ui); text-transform: uppercase; letter-spacing: .08em; border-left: 3px solid var(--fg-2); padding-left: 6px; color: var(--fg-1); }
+.cal-dialog { width: min(600px, 94vw); display: grid; gap: var(--sp-3); max-height: 88vh; overflow-y: auto; }
+.cal-dialog-head, .cal-dialog-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.cal-dialog-head h2 { margin: 0; font-size: var(--fs-xl); }
+.cal-field { display: grid; gap: 6px; font-size: var(--fs-sm); color: var(--fg-1); }
+.cal-field input, .cal-field textarea { background: var(--bg-0); color: var(--fg-0); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 7px 9px; font: inherit; }
+.cal-field input:focus, .cal-field textarea:focus { outline: none; border-color: var(--accent); }
+.cal-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+.cal-odds { display: grid; gap: var(--sp-2); padding: var(--sp-3); background: var(--bg-1); border-radius: var(--radius-sm); }
+.cal-odds .cal-odds-title { margin: 0; font-family: var(--font-ui); font-size: var(--fs-sm); font-weight: 600; color: var(--fg-0); }
+.cal-odds ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.cal-odds li { display: grid; grid-template-columns: 90px 1fr 44px 130px; align-items: center; gap: var(--sp-2); font-size: var(--fs-sm); }
+.cal-odds-name { color: var(--fg-1); }
+.cal-odds-bar { height: 6px; background: var(--bg-2); border-radius: var(--radius-xs); overflow: hidden; }
+.cal-odds-bar > span { display: block; height: 100%; background: var(--accent); }
+.cal-odds-pct { text-align: right; font-variant-numeric: tabular-nums; color: var(--fg-0); }
+.cal-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.cal-links li { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); font-size: var(--fs-sm); }
+@media (max-width: 1100px) { .cal-layout { grid-template-columns: minmax(0, 1fr); } .cal-day { min-height: 72px; } }
+@media (max-width: 600px) {
+  .cal-month { padding: var(--sp-2); }
+  .cal-head { flex-wrap: wrap; } .cal-title { min-width: 0; flex: 1; font-size: var(--fs-md); }
+  .cal-grid { gap: 1px; } .cal-dow { padding: 2px; font-size: var(--fs-xs); letter-spacing: 0; text-align: center; }
+  .cal-day { min-height: 56px; padding: 2px; }
+  .cal-ev { font-size: var(--fs-xs); padding: 2px 3px; } .cal-ev .mono { display: none; }
+  .cal-played { font-size: var(--fs-xs); padding: 1px 2px; }
+}
+.cal-day { cursor: pointer; }
+.cal-day:hover { background: var(--bg-2); }

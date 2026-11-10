@@ -1,0 +1,16 @@
+{
+  "name": "sightline-map3d",
+  "private": true,
+  "type": "module",
+  "description": "Export d'une carte de CS2 en 3D pour le replay de Sightline (Source 2 Viewer + gltf-transform), lancé à la main",
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "dependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "meshoptimizer": "1.3.0",
+    "sharp": "0.35.5"
+  }
+}

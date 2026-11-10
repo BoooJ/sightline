@@ -1,0 +1,26 @@
+:root { color-scheme: dark; --bg: #111418; --panel: #1a1f25; --line: #2a313a; --text: #e6e8eb; --muted: #9aa3ad;
+        --mint: #3ddc97; --red: #e5484d; --amber: #f5a524; }
+body { width: 320px; margin: 0; padding: 14px 16px 16px; background: var(--bg); color: var(--text);
+       font: 13px/1.45 system-ui, sans-serif; }
+h1 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
+.state { --dot: var(--muted); margin: 0; padding: 8px 10px; border: 1px solid var(--line); border-radius: 4px;
+         background: var(--panel); }
+.state::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%;
+                 background: var(--dot); vertical-align: 1px; }
+.state.ok { --dot: var(--mint); }
+.state.expired { --dot: var(--red); }
+.state.error { --dot: var(--amber); }
+.when { margin: 4px 0 12px; color: var(--muted); font-size: 12px; }
+button { padding: 6px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); color: var(--text);
+         font: inherit; cursor: pointer; }
+button:hover { border-color: var(--mint); }
+button:disabled { opacity: .6; cursor: wait; }
+details { margin-top: 14px; color: var(--muted); }
+summary { cursor: pointer; color: var(--text); }
+.row { display: flex; gap: 6px; }
+input { flex: 1; min-width: 0; padding: 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel);
+        color: var(--text); font: 11px ui-monospace, monospace; }
+input:focus { outline: 1px solid var(--mint); }
+.note { margin: 6px 0 0; font-size: 12px; }
+code { display: block; margin: 6px 0; padding: 6px; background: var(--panel); color: var(--text); word-break: break-all;
+       font-size: 11px; }

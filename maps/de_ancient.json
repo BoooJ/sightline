@@ -1,0 +1,25 @@
+{
+  "name": "de_ancient",
+  "display_name": "Ancient",
+  "pos_x": -2953.0,
+  "pos_y": 2164.0,
+  "scale": 5.0,
+  "image": "de_ancient.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "de_ancient.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": [
+    0.31,
+    0.25
+  ],
+  "bomb_b": [
+    0.8,
+    0.4
+  ],
+  "active_duty": true
+}

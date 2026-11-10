@@ -1,0 +1,37 @@
+.lb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--sp-3); }
+.lb-card { padding: var(--sp-3) var(--sp-4); display: grid; gap: var(--sp-2); align-content: start; }
+.lb-card.full { max-width: 860px; }
+.lb-head { display: flex; align-items: center; justify-content: space-between; min-height: 30px; }
+.lb-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.lb-list li { display: grid; grid-template-columns: 22px minmax(80px, 1fr) minmax(50px, 80px) minmax(60px, 1.2fr) 70px; align-items: center; gap: var(--sp-2); min-height: 28px; font-size: var(--fs-sm); }
+.lb-rank { color: var(--fg-2); text-align: right; }
+.lb-top .lb-rank { color: var(--accent); font-weight: 700; }
+.lb-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-team { color: var(--fg-2); font-size: var(--fs-xs); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-bar { height: 6px; background: var(--bg-3); border-radius: var(--radius-xs); overflow: hidden; }
+.lb-bar i { display: block; height: 100%; background: var(--fg-2); border-radius: var(--radius-xs); }
+.lb-top .lb-bar i { background: var(--accent); }
+.lb-val { text-align: right; color: var(--fg-0); }
+.lb-compare { max-width: 980px; }
+.lb-cmp-head { display: flex; align-items: center; justify-content: center; gap: var(--sp-3); margin-bottom: var(--sp-4); flex-wrap: wrap; }
+.lb-cmp-sub { text-align: center; margin: 0 0 var(--sp-2); }
+
+/* tableau principal (sous-projet E) */
+.lb-table-wrap { padding-top: var(--sp-3); }
+.lb-toolbar { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-5); align-items: flex-start; margin-bottom: var(--sp-3); }
+.lb-add { position: relative; }
+.lb-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.lb-chip { height: 26px; padding: 0 8px; font-size: var(--fs-xs); }
+.lb-menu { position: absolute; top: calc(100% + 6px); left: 0; z-index: 30; width: min(420px, 92vw); max-height: 320px; overflow: auto; padding: 6px; display: grid; gap: 2px; box-shadow: var(--shadow-1); }
+.lb-menu-item { display: grid; gap: 1px; text-align: left; padding: 6px 10px; background: none; border: 0; border-radius: var(--radius-sm); color: var(--fg-0); cursor: pointer; font: inherit; }
+.lb-menu-item:hover { background: var(--bg-2); }
+.lb-menu-item small { color: var(--fg-2); font-size: var(--fs-xs); }
+.lb-table { min-width: 0 !important; }
+.lb-table th.sb-name, .lb-table td.sb-name { text-align: left; }
+.lb-rank-cell { color: var(--fg-2); width: 36px; }
+.lb-podium .lb-rank-cell { color: var(--accent); font-weight: 700; }
+.lb-pinned td { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.lb-pin { background: none; border: 0; color: var(--fg-2); cursor: pointer; font-size: 13px; padding: 0 6px 0 0; opacity: .5; }
+.lb-pin:hover, .lb-pin.on { opacity: 1; color: var(--accent); }
+.lb-roles { margin-top: 2px; }
+.lb-roles .role-badge.edge { font-size: var(--fs-xs); padding: 0 5px; }

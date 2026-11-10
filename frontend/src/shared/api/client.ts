@@ -1,0 +1,222 @@
+import { decode } from "@msgpack/msgpack";
+import type { Baseline, ComparisonSettings, ContextSummary, EdgeRoles, PatternResult, PlayerProfile, Playbook2, PrepReportFull, PrepReportHead, PrepTemplate, PrepTemplateWidget, PrepWidgetDef, NotificationT, ScoutPlayers, ShareLinkT, ShortlistT, VetoRecordT, VetoStepT, SharedReplay, Tactic, TeamBaseline, TeamPositionRow, TeamStats, Shape, AppSettings, Demo, MapMeta, MatchDetail, MatchStats, MatchSummary, ReplayPayload, Side, CareerStats, PlayerDetail, RoundSearch, TeamItem, PlaylistHead, PlaylistDetail, GrenadeSearch, Heatmap, HeatPlayer, Annotations, AppUser, AuthState, InviteRow, NewInvite, MatchComment, ScoutTeam, ScoutReport, ScoutLineup, Playbook, VetoData, AudioTrack, Facets, Dashboard, Strat, StratSummary, StratGrenade, MatchAnalysis, Callouts, PlayerExtras, Highlight, CalendarEvent, RemoteDownload, Bookmark, Timings, CustomCallout, Vec3, LearnStudy, AiStatus, RoleProfiles, PlayerStory, FaceitStatus, FaceitTeamHit, FaceitTracked, FaceitTeamReport, ScoutBrief, AiScoutReport, CalloutZone, TeamZones, PlayerRoutine, CoachNoteT, MatchDebriefT, TeamGoalT, GoalMetric, NoteFilter, NoteInput, NoteT, ApiKeyT, NewApiKey, WebhookT, NewWebhook, WebhookDeliveryT, DiscordConfig, CommsState, PlaybookEntryT } from "./types";
+
+async function json<T>(url: string, init?: RequestInit): Promise<T> {
+  const r = await fetch(url, init);
+  // session expirée ou équipe verrouillée entre-temps : l'écran de connexion prend le relais
+  if (r.status === 401 && !url.startsWith("/api/auth/")) window.dispatchEvent(new Event("auth-required"));
+  if (!r.ok) {
+    let msg = `${r.status} ${r.statusText}`;
+    try { msg = (await r.json()).detail ?? msg; } catch { /* corps non JSON */ }
+    throw new Error(msg);
+  }
+  return r.json() as Promise<T>;
+}
+const body = (data: unknown): RequestInit => ({
+  method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(data),
+});
+const qs = (p: Record<string, string | undefined>) => {
+  const s = new URLSearchParams(Object.entries(p).filter(([, v]) => v) as [string, string][]);
+  return s.size ? `?${s}` : "";
+};
+export type ImportResult = { demo_id: number; created: boolean; file_name: string }[];
+
+export const api = {
+  demos: () => json<Demo[]>("/api/demos"),
+  scan: (folders?: string[]) => json<ImportResult>("/api/demos/scan", body(folders ? { folders } : {})),
+  reparse: (id: number) => json<{ ok: boolean }>(`/api/demos/${id}/reparse`, { method: "POST" }),
+  deleteDemo: (id: number) => json<{ ok: boolean }>(`/api/demos/${id}`, { method: "DELETE" }),
+  matches: (p: Record<string, string | undefined> = {}) => json<MatchSummary[]>(`/api/matches${qs(p)}`),
+  facets: () => json<Facets>("/api/matches/facets"),
+  setLabels: (id: number, p: { folder?: string; event?: string; tags?: string[]; played_on?: string | null }) =>
+    json<NonNullable<MatchSummary["labels"]>>(`/api/matches/${id}/labels`, { ...body(p), method: "PATCH" }),
+  match: (id: number) => json<MatchDetail>(`/api/matches/${id}`),
+  matchStats: (id: number, side?: Side, econ?: string) => json<MatchStats>(`/api/matches/${id}/stats${qs({ side, econ })}`),
+  matchAnalysis: (id: number) => json<MatchAnalysis>(`/api/matches/${id}/analysis`),
+  debrief: (id: number, team?: number) => json<MatchDebriefT>(`/api/matches/${id}/debrief${team ? `?team=${team}` : ""}`),
+  saveDebrief: (id: number, team: number, notes: { worked?: string; change?: string; actions?: string }) =>
+    json<{ ok: boolean }>(`/api/matches/${id}/debrief?team=${team}`, { ...body(notes), method: "PUT" }),
+  goals: (team: number, archived = false) => json<TeamGoalT[]>(`/api/teams/${team}/goals${archived ? "?archived=true" : ""}`),
+  goalMetrics: () => json<GoalMetric[]>("/api/goals/metrics"),
+  createGoal: (team: number, g: { metric: string; title: string; target?: number | null; note?: string; source_match_id?: number }) =>
+    json<TeamGoalT>(`/api/teams/${team}/goals`, body(g)),
+  updateGoal: (id: number, g: { title?: string; target?: number | null; note?: string; archived?: boolean }) =>
+    json<TeamGoalT>(`/api/goals/${id}`, { ...body(g), method: "PATCH" }),
+  deleteGoal: (id: number) => json<{ ok: boolean }>(`/api/goals/${id}`, { method: "DELETE" }),
+  playerExtras: (p: Record<string, string | undefined> = {}) => json<Record<string, PlayerExtras>>(`/api/players/extras${qs(p)}`),
+  highlights: (p: Record<string, string | undefined> = {}) => json<{ total: number; items: Highlight[] }>(`/api/highlights${qs(p)}`),
+  highlightTypes: () => json<Record<string, string>>("/api/highlights/types"),
+  calendar: (start: string, end: string) => json<CalendarEvent[]>(`/api/calendar${qs({ start, end })}`),
+  createEvent: (e: Partial<CalendarEvent> & { match_ids?: number[] }) => json<CalendarEvent>("/api/calendar", body(e)),
+  updateEvent: (id: number, e: Partial<CalendarEvent> & { match_ids?: number[] }) => json<CalendarEvent>(`/api/calendar/${id}`, { ...body(e), method: "PATCH" }),
+  deleteEvent: (id: number) => json<{ ok: boolean }>(`/api/calendar/${id}`, { method: "DELETE" }),
+  importUrl: (url: string) => json<RemoteDownload>("/api/demos/import-url", body({ url })),
+  remoteDownloads: () => json<RemoteDownload[]>("/api/demos/remote"),
+  faceitStatus: () => json<FaceitStatus>("/api/faceit/status"),
+  faceitConfig: (b: { api_key?: string; clear_key?: boolean; downloads?: boolean }) => json<FaceitStatus>("/api/faceit/config", { ...body(b), method: "PUT" }),
+  faceitSearch: (q: string) => json<FaceitTeamHit[]>(`/api/faceit/search?q=${encodeURIComponent(q)}`),
+  faceitTracked: () => json<FaceitTracked[]>("/api/faceit/teams"),
+  faceitTeam: (id: string, scope: string) => json<FaceitTeamReport>(`/api/faceit/teams/${id}?scope=${scope}`),
+  faceitUntrack: (id: string) => json<{ ok: boolean }>(`/api/faceit/teams/${id}`, { method: "DELETE" }),
+  faceitImport: (matchId: string, url?: string) => json<RemoteDownload[]>(`/api/faceit/matches/${matchId}/import`, { ...body(url ? { url } : {}), method: "POST" }),
+  bookmarks: (match?: number) => json<Bookmark[]>(`/api/bookmarks${qs({ match: match ? String(match) : undefined })}`),
+  addBookmark: (b: { match_id: number; round_number: number; tick: number; label?: string }) => json<Bookmark>("/api/bookmarks", body(b)),
+  renameBookmark: (id: number, label: string) => json<Bookmark>(`/api/bookmarks/${id}`, { ...body({ label }), method: "PATCH" }),
+  deleteBookmark: (id: number) => json<{ ok: boolean }>(`/api/bookmarks/${id}`, { method: "DELETE" }),
+  notes: (f: NoteFilter = {}) => json<NoteT[]>(`/api/notes${qs({ map: f.map, side: f.side, match: f.match?.toString(),
+    team: f.team?.toString(), strat: f.strat?.toString() })}`),
+  createNote: (p: NoteInput) => json<NoteT>("/api/notes", body(p)),
+  updateNote: (id: number, p: Partial<NoteInput>) => json<NoteT>(`/api/notes/${id}`, { ...body(p), method: "PATCH" }),
+  deleteNote: (id: number) => json<{ ok: boolean }>(`/api/notes/${id}`, { method: "DELETE" }),
+  timings: (teamId: number, map: string, side: Side, tactic?: string) => json<Timings>(`/api/scouting/teams/${teamId}/timings${qs({ map, side, tactic })}`),
+  allMaps: () => json<MapMeta[]>("/api/maps?all=true"),
+  learnRoles: (map: string, side: Side) => json<RoleProfiles>(`/api/scouting/roles${qs({ map, side })}`),
+  aiStatus: () => json<AiStatus>("/api/ai/status"),
+  aiConfig: (b: Record<string, unknown>) => json<AiStatus>("/api/ai/config", { ...body(b), method: "PUT" }),
+  story: (match: number, steamid: string) => json<PlayerStory>(`/api/scouting/story${qs({ match: String(match), steamid })}`),
+  learn: (map: string, side: Side, place?: string, at?: number) => json<LearnStudy>(`/api/scouting/learn${qs({ map, side, place, at: at ? String(at) : undefined })}`),
+  addCustomCallout: (map: string, label: string, pos: Vec3) => json<CustomCallout>("/api/callouts/custom", body({ map, label, pos })),
+  updateCustomCallout: (id: number, p: { label?: string; pos?: Vec3 }) => json<CustomCallout>(`/api/callouts/custom/${id}`, { ...body(p), method: "PATCH" }),
+  deleteCustomCallout: (id: number) => json<{ ok: boolean }>(`/api/callouts/custom/${id}`, { method: "DELETE" }),
+  callouts: (map: string) => json<Callouts>(`/api/callouts?map=${encodeURIComponent(map)}`),
+  setCallout: (map: string, place: string, label: string) => json<{ label: string | null }>("/api/callouts", { ...body({ map, place, label }), method: "PUT" }),
+  replay: async (roundId: number): Promise<ReplayPayload> => {
+    const r = await fetch(`/api/rounds/${roundId}/replay`);
+    if (r.status === 401) window.dispatchEvent(new Event("auth-required"));
+    if (!r.ok) throw new Error(`Replay indisponible (${r.status})`);
+    return decode(new Uint8Array(await r.arrayBuffer())) as ReplayPayload;
+  },
+  players: (p: { side?: Side; map?: string; econ?: string; role?: string } & Record<string, string | undefined> = {}) => json<CareerStats[]>(`/api/players${qs(p)}`),
+  player: (steamid: string, p: { side?: Side; map?: string; econ?: string } & Record<string, string | undefined> = {}) => json<PlayerDetail>(`/api/players/${steamid}${qs(p)}`),
+  searchRounds: (p: Record<string, string | undefined>) => json<RoundSearch>(`/api/rounds/search${qs(p)}`),
+  teams: () => json<TeamItem[]>("/api/teams"),
+  playlists: () => json<PlaylistHead[]>("/api/playlists"),
+  playlist: (id: number) => json<PlaylistDetail>(`/api/playlists/${id}`),
+  createPlaylist: (name: string, description = "", extra: { folder?: string; favorite?: boolean; tags?: string[] } = {}) => json<PlaylistHead>("/api/playlists", body({ name, description, ...extra })),
+  updatePlaylist: (id: number, p: { name?: string; description?: string; folder?: string; favorite?: boolean; tags?: string[] }) => json<PlaylistHead>(`/api/playlists/${id}`, { ...body(p), method: "PATCH" }),
+  demoFileUrl: (demoId: number) => `/api/demos/${demoId}/file`,
+  deletePlaylist: (id: number) => json<{ ok: boolean }>(`/api/playlists/${id}`, { method: "DELETE" }),
+  addToPlaylist: (id: number, what: number[] | { rounds?: number[]; matches?: number[] }) =>
+    json<PlaylistHead & { added: number }>(`/api/playlists/${id}/items`, body(Array.isArray(what) ? { rounds: what } : what)),
+  bulkLabels: (p: { ids: number[]; folder?: string; event?: string; tags_add?: string[]; tags_remove?: string[] }) => json<{ updated: number }>("/api/matches/labels/bulk", body(p)),
+  updatePlaylistItem: (id: number, itemId: number, p: { note?: string; position?: number }) =>
+    json<PlaylistDetail>(`/api/playlists/${id}/items/${itemId}`, { ...body(p), method: "PATCH" }),
+  removePlaylistItem: (id: number, itemId: number) => json<PlaylistDetail>(`/api/playlists/${id}/items/${itemId}`, { method: "DELETE" }),
+  grenades: (p: Record<string, string | undefined>) => json<GrenadeSearch>(`/api/grenades${qs(p)}`),
+  heatmap: (p: Record<string, string | undefined>) => json<Heatmap>(`/api/heatmaps${qs(p)}`),
+  heatPlayers: (map: string) => json<HeatPlayer[]>(`/api/heatmaps/players?map=${encodeURIComponent(map)}`),
+  annotations: (roundId: number) => json<Annotations>(`/api/rounds/${roundId}/annotations`),
+  saveAnnotations: (roundId: number, a: Annotations) => json<Annotations>(`/api/rounds/${roundId}/annotations`, { ...body(a), method: "PUT" }),
+  annotatedRounds: (matchId: number) => json<number[]>(`/api/matches/${matchId}/annotations`),
+  me: () => json<AuthState>("/api/auth/me"),
+  setup: (p: { username: string; display_name: string; password: string; setup_code?: string }) => json<AuthState>("/api/auth/setup", body(p)),
+  login: (username: string, password: string) => json<AuthState>("/api/auth/login", body({ username, password })),
+  logout: () => json<{ ok: boolean }>("/api/auth/logout", { method: "POST" }),
+  updateMe: (p: { display_name?: string; current_password?: string; new_password?: string; steamid?: string | null; ts_nickname?: string | null; comparison?: ComparisonSettings | null }) => json<AppUser>("/api/auth/me", { ...body(p), method: "PATCH" }),
+  context: (p: Record<string, string | undefined> = {}) => json<ContextSummary>(`/api/context${qs(p)}`),
+  compare: (p: Record<string, string | undefined>) => json<Baseline>(`/api/compare${qs(p)}`),
+  inviteInfo: (token: string) => json<{ valid: boolean; role: string | null }>(`/api/auth/invite/${encodeURIComponent(token)}`),
+  register: (p: { token: string; username: string; display_name: string; password: string }) => json<AuthState>("/api/auth/register", body(p)),
+  members: () => json<AppUser[]>("/api/team/members"),
+  setRole: (id: number, role: string) => json<AppUser>(`/api/team/members/${id}`, { ...body({ role }), method: "PATCH" }),
+  removeMember: (id: number) => json<{ ok: boolean }>(`/api/team/members/${id}`, { method: "DELETE" }),
+  invites: () => json<InviteRow[]>("/api/team/invites"),
+  createInvite: (role: string) => json<NewInvite>("/api/team/invites", body({ role })),
+  revokeInvite: (id: number) => json<{ ok: boolean }>(`/api/team/invites/${id}`, { method: "DELETE" }),
+  comments: (matchId: number) => json<MatchComment[]>(`/api/matches/${matchId}/comments`),
+  addComment: (matchId: number, p: { round_number?: number | null; tick?: number | null; body: string; private?: boolean; shapes?: Shape[] }) =>
+    json<MatchComment>(`/api/matches/${matchId}/comments`, body(p)),
+  deleteComment: (id: number) => json<{ ok: boolean }>(`/api/comments/${id}`, { method: "DELETE" }),
+  scoutTeams: () => json<ScoutTeam[]>("/api/scouting/teams"),
+  scoutReport: (id: number) => json<ScoutReport>(`/api/scouting/teams/${id}`),
+  aiReport: (id: number) => json<AiScoutReport | null>(`/api/scouting/teams/${id}/report`),
+  makeAiReport: (id: number, model?: string) => json<AiScoutReport>(`/api/scouting/teams/${id}/report${model ? `?model=${encodeURIComponent(model)}` : ""}`, { method: "POST" }),
+  scoutBrief: (id: number, map: string, armed = false) => json<ScoutBrief>(`/api/scouting/teams/${id}/brief?map=${encodeURIComponent(map)}${armed ? "&armed=true" : ""}`),
+  scoutUtility: (id: number, map: string) => json<Record<"T" | "CT", ScoutLineup[]>>(`/api/scouting/teams/${id}/utility?map=${encodeURIComponent(map)}`),
+  roleLabels: () => json<Record<string, string>>("/api/players/roles"),
+  teamStats: (id: number, p: Record<string, string | undefined> = {}) => json<TeamStats>(`/api/teams/${id}/stats${qs(p)}`),
+  teamPositions: (id: number, p: Record<string, string | undefined> = {}) => json<TeamPositionRow[]>(`/api/teams/${id}/positions${qs(p)}`),
+  teamBaseline: (p: Record<string, string | undefined>) => json<TeamBaseline>(`/api/compare${qs({ ...p, mode: "teams", target: "team" })}`),
+  tactics: (p: { map?: string; side?: string } = {}) => json<Tactic[]>(`/api/tactics${qs(p)}`),
+  tactic: (id: number) => json<Tactic>(`/api/tactics/${id}`),
+  tacticCategories: () => json<{ key: string; label: string }[]>("/api/tactics/categories"),
+  createTactic: (b: Partial<Tactic>) => json<Tactic>("/api/tactics", body(b)),
+  updateTactic: (id: number, b: Partial<Tactic>) => json<Tactic>(`/api/tactics/${id}`, { ...body(b), method: "PATCH" }),
+  deleteTactic: (id: number) => json<{ ok: boolean }>(`/api/tactics/${id}`, { method: "DELETE" }),
+  playbook2: (teamId: number, p: Record<string, string | undefined>) => json<Playbook2>(`/api/playbook/${teamId}${qs(p)}`),
+  patternFinder: (teamId: number, b: unknown, lib: Record<string, string | undefined> = {}) => json<PatternResult>(`/api/pattern-finder/${teamId}${qs(lib)}`, body(b)),
+  playerProfile: (steamid: string, p: Record<string, string | undefined> = {}) => json<PlayerProfile>(`/api/players/${steamid}/profile${qs(p)}`),
+  rolesByMatch: (steamid: string) => json<Record<string, EdgeRoles>>(`/api/players/${steamid}/roles-by-match`),
+  playbook: (teamId: number, map: string) => json<Playbook>(`/api/scouting/teams/${teamId}/playbook?map=${encodeURIComponent(map)}`),
+  scoutPlayers: (p: Record<string, string | undefined>) => json<ScoutPlayers>(`/api/scouting/players${qs(p)}`),
+  shortlists: () => json<ShortlistT[]>("/api/shortlists"),
+  createShortlist: (name: string) => json<ShortlistT>("/api/shortlists", body({ name })),
+  deleteShortlist: (id: number) => json<{ ok: boolean }>(`/api/shortlists/${id}`, { method: "DELETE" }),
+  addToShortlist: (id: number, p: { steamid: string; name?: string; note?: string }) => json<ShortlistT>(`/api/shortlists/${id}/items`, body(p)),
+  removeFromShortlist: (id: number, itemId: number) => json<ShortlistT>(`/api/shortlists/${id}/items/${itemId}`, { method: "DELETE" }),
+  vetos: (team?: number) => json<VetoRecordT[]>(`/api/vetos${qs({ team: team ? String(team) : undefined })}`),
+  createVeto: (p: { team_a: number; team_b: number; format: string; steps: VetoStepT[]; played_on?: string | null; note?: string; match_id?: number | null }) => json<VetoRecordT>("/api/vetos", body(p)),
+  deleteVeto: (id: number) => json<{ ok: boolean }>(`/api/vetos/${id}`, { method: "DELETE" }),
+  veto: (a: number, b: number, maps: string[]) => json<VetoData>(`/api/scouting/veto?team_a=${a}&team_b=${b}&maps=${maps.join(",")}`),
+  audioTracks: (matchId: number) => json<AudioTrack[]>(`/api/matches/${matchId}/audio`),
+  prepWidgets: () => json<PrepWidgetDef[]>("/api/prep/widgets"),
+  prepTemplates: () => json<PrepTemplate[]>("/api/prep/templates"),
+  createPrepTemplate: (p: { name: string; widgets: PrepTemplateWidget[]; shared?: boolean }) => json<PrepTemplate>("/api/prep/templates", body(p)),
+  updatePrepTemplate: (id: number, p: { name?: string; widgets?: PrepTemplateWidget[]; shared?: boolean }) => json<PrepTemplate>(`/api/prep/templates/${id}`, { ...body(p), method: "PATCH" }),
+  deletePrepTemplate: (id: number) => json<{ ok: boolean }>(`/api/prep/templates/${id}`, { method: "DELETE" }),
+  prepReports: (team?: number) => json<PrepReportHead[]>(`/api/prep/reports${qs({ team: team ? String(team) : undefined })}`),
+  prepReport: (id: number) => json<PrepReportFull>(`/api/prep/reports/${id}`),
+  createPrepReport: (p: { team_id: number; map: string; template_id?: number; title?: string }) => json<PrepReportFull>("/api/prep/reports", body(p)),
+  updatePrepReport: (id: number, p: { title?: string; notes?: string }) => json<PrepReportFull>(`/api/prep/reports/${id}`, { ...body(p), method: "PATCH" }),
+  deletePrepReport: (id: number) => json<{ ok: boolean }>(`/api/prep/reports/${id}`, { method: "DELETE" }),
+  createShare: (p: { match_id: number; round_number: number; tick: number; layers: number[] }) => json<ShareLinkT>("/api/share", body(p)),
+  shared: (token: string) => json<SharedReplay>(`/api/share/${token}`),
+  sharedAudio: (token: string) => json<AudioTrack[]>(`/api/share/${token}/audio`),
+  sharedReplay: async (token: string, roundId: number): Promise<ReplayPayload> => {
+    const r = await fetch(`/api/share/${token}/replay/${roundId}`);
+    if (!r.ok) throw new Error(`Replay indisponible (${r.status})`);
+    return decode(new Uint8Array(await r.arrayBuffer())) as ReplayPayload;
+  },
+  updateAudio: (id: number, p: { label?: string; offset_s?: number; steamid?: string }) => json<AudioTrack>(`/api/audio/${id}`, { ...body(p), method: "PATCH" }),
+  deleteAudio: (id: number) => json<{ ok: boolean }>(`/api/audio/${id}`, { method: "DELETE" }),
+  dashboard: (steamid: string) => json<Dashboard>(`/api/players/${steamid}/dashboard`),
+  roundWeapons: (map?: string) => json<{ weapon: string; kills: number }[]>(`/api/rounds/weapons${qs({ map })}`),
+  strats: (p: { map?: string; side?: string } = {}) => json<StratSummary[]>(`/api/strats${qs(p)}`),
+  strat: (id: number) => json<Strat>(`/api/strats/${id}`),
+  createStrat: (p: Partial<Strat> & { name: string; map: string; side: string }) => json<Strat>("/api/strats", body(p)),
+  updateStrat: (id: number, p: Partial<Strat>) => json<Strat>(`/api/strats/${id}`, { ...body(p), method: "PATCH" }),
+  addStratGrenade: (id: number, g: Partial<StratGrenade>) => json<Strat>(`/api/strats/${id}/grenades`, body(g)),
+  deleteStrat: (id: number) => json<{ ok: boolean }>(`/api/strats/${id}`, { method: "DELETE" }),
+  // mémo d'équipe du stratbook (lexique, rappels, rôles par carte) ; à ne pas confondre avec `playbook` du scouting
+  memo: () => json<PlaybookEntryT[]>("/api/playbook"),
+  createMemo: (p: Partial<PlaybookEntryT>) => json<PlaybookEntryT>("/api/playbook", body(p)),
+  updateMemo: (id: number, p: Partial<PlaybookEntryT>) => json<PlaybookEntryT>(`/api/playbook/${id}`, { ...body(p), method: "PATCH" }),
+  deleteMemo: (id: number) => json<{ ok: boolean }>(`/api/playbook/${id}`, { method: "DELETE" }),
+  maps: () => json<MapMeta[]>("/api/maps"),
+  map: (name: string) => json<MapMeta>(`/api/maps/${name}`),
+  mapCallouts: (name: string) => json<CalloutZone[]>(`/api/maps/${name}/callouts`),
+  mapZones: (name: string) => json<TeamZones>(`/api/maps/${name}/zones`),
+  saveMapZones: (name: string, zones: CalloutZone[]) => json<TeamZones>(`/api/maps/${name}/zones`, { ...body({ zones }), method: "PUT" }),
+  resetMapZones: (name: string) => json<TeamZones>(`/api/maps/${name}/zones`, { method: "DELETE" }),
+  coach: (b: Record<string, unknown>) => json<CoachNoteT>("/api/scouting/coach", body(b)),
+  routine: (match: number, steamid: string, side: string, scope: string, armed: boolean) => json<PlayerRoutine>(`/api/scouting/routine?match=${match}&steamid=${steamid}&side=${side}&scope=${scope}&armed=${armed}`),
+  notifications: (after = 0) => json<NotificationT[]>(`/api/notifications${after ? `?after=${after}` : ""}`),
+  testNotification: () => json<NotificationT>("/api/notifications/test", { method: "POST" }),
+  clearNotifications: () => json<{ ok: boolean }>("/api/notifications", { method: "DELETE" }),
+  settings: () => json<AppSettings>("/api/settings"),
+  saveSettings: (s: Partial<AppSettings>) => json<AppSettings>("/api/settings", { ...body(s), method: "PUT" }),
+  apiKeys: () => json<ApiKeyT[]>("/api/integrations/keys"),
+  createApiKey: (name: string, scopes: string[]) => json<NewApiKey>("/api/integrations/keys", body({ name, scopes })),
+  revokeApiKey: (id: number) => json<ApiKeyT>(`/api/integrations/keys/${id}`, { method: "DELETE" }),
+  webhooks: () => json<WebhookT[]>("/api/integrations/webhooks"),
+  createWebhook: (url: string, events: string[]) => json<NewWebhook>("/api/integrations/webhooks", body({ url, events })),
+  updateWebhook: (id: number, patch: { active?: boolean; events?: string[] }) =>
+    json<WebhookT>(`/api/integrations/webhooks/${id}`, { ...body(patch), method: "PATCH" }),
+  deleteWebhook: (id: number) => json<{ ok: boolean }>(`/api/integrations/webhooks/${id}`, { method: "DELETE" }),
+  testWebhook: (id: number) => json<{ ok: boolean }>(`/api/integrations/webhooks/${id}/test`, { method: "POST" }),
+  webhookDeliveries: () => json<WebhookDeliveryT[]>("/api/integrations/webhooks/deliveries"),
+  discordConfig: () => json<DiscordConfig>("/api/discord/config"),
+  commsSessions: () => json<CommsState>("/api/integrations/comms"),
+  saveDiscordConfig: (b: { app_id: string; public_key: string; bot_token?: string }) =>
+    json<DiscordConfig & { registered: boolean; error: string | null }>("/api/discord/config", { ...body(b), method: "PUT" }),
+};

@@ -1,0 +1,25 @@
+{
+  "name": "de_inferno",
+  "display_name": "Inferno",
+  "pos_x": -2087.0,
+  "pos_y": 3870.0,
+  "scale": 4.9,
+  "image": "de_inferno.png",
+  "levels": [
+    {
+      "name": "default",
+      "image": "de_inferno.png",
+      "z_min": -100000.0,
+      "z_max": 100000.0
+    }
+  ],
+  "bomb_a": [
+    0.81,
+    0.69
+  ],
+  "bomb_b": [
+    0.49,
+    0.22
+  ],
+  "active_duty": true
+}

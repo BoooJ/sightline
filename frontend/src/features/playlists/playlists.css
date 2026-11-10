@@ -1,0 +1,73 @@
+/* menu « ajouter à une playlist » */
+.pl-menu-wrap { position: relative; }
+.pl-menu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: 280px; padding: 6px; display: grid; gap: 2px;
+  box-shadow: var(--shadow-1); }
+.pl-menu > button { display: flex; justify-content: space-between; gap: var(--sp-2); padding: 8px 10px; border: 0; border-radius: var(--radius-sm);
+  background: none; color: var(--fg-0); font: inherit; cursor: pointer; text-align: left; }
+.pl-menu > button:hover { background: var(--bg-3); }
+.pl-menu > button .mono { color: var(--fg-2); }
+.pl-menu-empty { padding: 8px 10px; color: var(--fg-2); }
+.pl-menu-new { display: flex; gap: 6px; padding: 6px 4px 2px; border-top: 1px solid var(--line); margin-top: 4px; }
+.pl-menu-new input { flex: 1; min-width: 0; height: 28px; padding: 0 8px; background: var(--bg-2); color: var(--fg-0);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-sm); font: inherit; }
+.pl-menu-new input:focus { outline: 0; border-color: var(--accent); }
+
+/* liste des playlists */
+.pls-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--sp-3); }
+.pls-card { position: relative; display: grid; gap: 4px; padding: var(--sp-4); color: var(--fg-0); overflow: hidden;
+  transition: border-color .15s, transform .15s; }
+.pls-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.pls-count { position: absolute; right: var(--sp-4); top: var(--sp-2); font-size: 44px; color: var(--accent-dim); line-height: 1; }
+.pls-name { font: 700 var(--fs-lg) var(--font-display); font-stretch: 125%; position: relative; }
+.pls-meta { color: var(--fg-2); font-size: var(--fs-sm); }
+.pls-desc { color: var(--fg-1); font-size: var(--fs-sm); }
+.pls-edit { display: grid; gap: var(--sp-2); min-width: 360px; }
+
+/* éléments d'une playlist */
+.pli-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.pli { display: grid; grid-template-columns: 32px minmax(0, 1fr) minmax(160px, 260px) auto; align-items: center; gap: var(--sp-3);
+  padding: 8px 4px; border-top: 1px solid var(--line); }
+.pli:first-child { border-top: 0; }
+.pli:hover { background: var(--bg-2); }
+.pli-num { color: var(--fg-2); text-align: center; }
+.pli-main { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; min-width: 0; }
+.pli-title b { color: var(--accent); font-weight: 600; }
+.pli-sub { font-size: var(--fs-sm); }
+.pli-note { height: 28px; padding: 0 8px; background: transparent; color: var(--fg-1); border: 1px solid transparent; border-radius: var(--radius-sm); font: inherit; }
+.pli-note:hover { border-color: var(--line-strong); }
+.pli-note:focus { outline: 0; border-color: var(--accent); background: var(--bg-2); color: var(--fg-0); }
+.pli-actions { display: flex; gap: 2px; }
+
+/* barre de lecture d'une playlist dans le replay */
+.rp-playlist { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: var(--sp-2); padding: 3px 4px 3px 10px; border: 1px solid var(--accent);
+  border-radius: var(--radius-sm); background: var(--accent-dim); font-size: var(--fs-sm); white-space: nowrap; }
+.rp-playlist a.name { color: var(--accent); font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+.rp-playlist .mono { color: var(--fg-1); }
+.rp-playlist-note { color: var(--fg-1); font-style: italic; max-width: 240px; overflow: hidden; text-overflow: ellipsis; }
+
+/* dossiers, favoris, tableau (sous-projet I) */
+.pls-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--sp-4); align-items: start; }
+.pls-rail { display: grid; gap: 2px; padding: var(--sp-2); }
+.pls-rail-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--fg-1); font: inherit; font-size: var(--fs-sm); cursor: pointer; text-align: left; }
+.pls-rail-item span:nth-of-type(1) { flex: 1; }
+.pls-rail-item:hover { background: var(--bg-2); color: var(--fg-0); }
+.pls-rail-item.on { background: var(--accent-dim); color: var(--accent); }
+.pls-main { padding: var(--sp-3) var(--sp-4); }
+.pls-filters { display: flex; gap: var(--sp-4); flex-wrap: wrap; margin-bottom: var(--sp-3); }
+.pls-thead, .pls-row { display: grid; grid-template-columns: 32px minmax(200px, 1.6fr) 140px minmax(120px, 1fr) 70px 120px 110px; align-items: center; gap: var(--sp-3); }
+.pls-thead { height: 32px; border-bottom: 1px solid var(--line); color: var(--fg-2); font: 600 var(--fs-xs) var(--font-ui); text-transform: uppercase; letter-spacing: .06em; }
+.pls-row { min-height: 52px; border-bottom: 1px solid var(--line); }
+.pls-row:last-child { border-bottom: 0; }
+.pls-row:hover { background: var(--bg-2); }
+.pls-name-cell { display: grid; gap: 2px; color: var(--fg-0); min-width: 0; }
+.pls-name-cell .pls-name { font-size: var(--fs-md); }
+.pls-name-cell:hover .pls-name { color: var(--accent); }
+.pls-cell { font-size: var(--fs-sm); min-width: 0; }
+.pls-maps { display: flex; flex-wrap: wrap; gap: 3px; }
+.th-right { text-align: right; }
+.pls-star { border: 0; background: none; color: var(--fg-2); cursor: pointer; padding: 4px; border-radius: var(--radius-sm); display: inline-flex; }
+.pls-star:hover { color: var(--fg-0); background: var(--bg-3); }
+.pls-star.on { color: #ffd23f; }
+.pls-star.big { vertical-align: middle; margin-right: 6px; }
+.pl-sub .mlab, .pls-desc .mlab { margin-left: 6px; }
+@media (max-width: 900px) { .pls-layout { grid-template-columns: 1fr; } .pls-thead { display: none; } .pls-row { grid-template-columns: 32px 1fr; } .pls-row .pls-cell { display: none; } }

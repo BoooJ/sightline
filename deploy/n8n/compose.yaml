@@ -1,0 +1,48 @@
+# n8n : imports PRACC → Sightline et messages Discord (spec 2026-10-22-n8n-webhooks-design.md).
+# Sur le serveur : ~/apps/n8n/compose.yaml, avec à côté un .env (chmod 600) qui contient N8N_ENCRYPTION_KEY.
+# Cette clé chiffre les identifiants rangés dans n8n : la perdre = les ressaisir. Elle n'est jamais commitée.
+# n8n n'écoute que sur 127.0.0.1 ; Caddy le publie en HTTPS sur n8n.example.com.
+name: n8n
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:2.44.6
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5678:5678"
+    env_file: .env
+    environment:
+      N8N_HOST: n8n.example.com
+      N8N_PROTOCOL: https
+      N8N_PROXY_HOPS: "1"
+      N8N_WEBHOOK_URL: https://n8n.example.com/
+      # UTC comme le serveur : la fenêtre du backup OVH (06:00) s'exprime telle quelle dans les déclencheurs
+      GENERIC_TIMEZONE: UTC
+      TZ: UTC
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
+      # aucune commande système depuis un workflow, même si le compte était compromis
+      NODES_EXCLUDE: '["n8n-nodes-base.executeCommand","n8n-nodes-base.localFileTrigger"]'
+      EXECUTIONS_DATA_PRUNE: "true"
+      EXECUTIONS_DATA_MAX_AGE: "336"
+      # formulaire d'import (W4) : une démo CS2 fait 100 à 400 Mo (200 Mo par défaut) ; stockée sur disque, pas en mémoire
+      N8N_FORMDATA_FILE_SIZE_MAX: "1024"
+    volumes:
+      - n8n-data:/home/node/.n8n
+    # ~420 Mo au repos (n8n + l'exécuteur de code) : 512 Mo ne laissait aucune marge
+    mem_limit: 768m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:5678/healthz >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+volumes:
+  n8n-data:

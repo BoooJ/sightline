@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Sightline · PRACC</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h1>Sightline · PRACC</h1>
+  <p class="state" id="state">Aucun tour pour l'instant.</p>
+  <p class="when" id="when"></p>
+  <p class="state" id="faceit" hidden></p>
+  <p class="when" id="faceit-when"></p>
+  <button id="run" type="button">Lancer un tour maintenant</button>
+  <details id="setup">
+    <summary>Secret pour n8n</summary>
+    <p>Première extension de l'équipe : copie ce secret une fois dans n8n (identifiant « Extension PRACC », champ <em>Value</em>).</p>
+    <code id="secret">…</code>
+    <button id="copy" type="button">Copier</button>
+    <p>Extension d'un coéquipier : colle ici le secret de la première extension.</p>
+    <div class="row">
+      <input id="paste" type="password" autocomplete="off" spellcheck="false" aria-label="Secret de l'équipe">
+      <button id="use" type="button">Utiliser</button>
+    </div>
+    <p class="note" id="secret-msg" role="status"></p>
+  </details>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

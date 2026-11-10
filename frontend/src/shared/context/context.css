@@ -1,0 +1,49 @@
+/* barre de contexte commune (équipe, carte, camp, période, matchs, achats, filtres, résumé, comparaison) */
+.ctx { display: grid; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.ctx-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--sp-2) var(--sp-3); }
+.ctx-field { display: grid; gap: 4px; min-width: 0; }
+.ctx-label { color: var(--fg-2); font: 600 var(--fs-xs) var(--font-ui); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+.ctx-select { height: 28px; min-width: 150px; }
+.ctx-narrow { min-width: 118px; }
+.ctx-fixed { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: var(--radius-sm); background: var(--accent-dim); color: var(--accent); font-weight: 700; }
+.ctx .ts-seg button.on, .cmp-dialog .ts-seg button.on { background: var(--accent-dim); color: var(--accent); font-weight: 600; }
+.ctx-on { border-color: var(--accent); color: var(--accent); }
+.ctx-summary { display: flex; align-items: center; gap: var(--sp-2); margin-left: auto; height: 28px; align-self: flex-end; }
+.ctx-count { color: var(--fg-1); font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: .06em; }
+.ctx-count b { color: var(--fg-0); font-size: var(--fs-md); margin-right: 4px; }
+.ctx-dot { color: var(--fg-2); }
+.ctx-cmp-row { align-items: center; gap: var(--sp-2); }
+.ctx-cmp { color: var(--fg-0); font-weight: 600; }
+.ctx-pop-anchor { position: relative; }
+.ctx-pop { position: absolute; top: calc(100% + 6px); right: 0; left: auto; z-index: 30; width: min(520px, calc(100vw - 2 * var(--sp-4))); padding: var(--sp-4); display: grid; gap: var(--sp-3); box-shadow: var(--shadow-1); }
+.ctx-pop-foot { display: flex; justify-content: space-between; gap: var(--sp-2); }
+.ctx-matches { padding: var(--sp-2) var(--sp-3); max-height: 320px; overflow: auto; }
+.ctx-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.ctx-table th { text-align: left; color: var(--fg-2); font: 600 var(--fs-xs) var(--font-ui); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.ctx-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.ctx-table tr:last-child td { border-bottom: 0; }
+@media (max-width: 900px) { .ctx-summary { margin-left: 0; } .ctx-select { min-width: 0; width: 100%; } }
+
+/* référence de comparaison à côté d'une statistique */
+.comp { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; color: var(--fg-2); font-size: var(--fs-xs); }
+.comp-base b { color: var(--fg-1); font-weight: 600; }
+.comp-delta { font-weight: 600; }
+.comp.pos .comp-delta { color: var(--ok); }
+.comp.neg .comp-delta { color: var(--error); }
+.comp.flat .comp-delta { color: var(--fg-2); }
+.comp.weak .comp-delta { color: var(--fg-2); opacity: .8; }
+.pl-tile .comp { margin-top: 4px; }
+
+/* fenêtre « Comparé à » */
+.cmp-dialog { display: grid; gap: var(--sp-3); width: min(640px, 94vw); }
+.cmp-mode { justify-self: start; }
+.cmp-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.cmp-search { width: 100%; }
+.cmp-list { list-style: none; margin: 0; padding: 0; max-height: 220px; overflow: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.cmp-list li { padding: 4px 10px; border-bottom: 1px solid var(--line); }
+.cmp-list li:last-child { border-bottom: 0; }
+.cmp-list .hm-check { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.cmp-preset { display: inline-flex; align-items: center; gap: 2px; }
+.cmp-save { display: flex; gap: var(--sp-2); }
+.cmp-save .input { flex: 1; }
+.pl-rating .comp b { font-size: var(--fs-md); line-height: 1.2; }

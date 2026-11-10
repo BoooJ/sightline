@@ -1,0 +1,623 @@
+{
+ "_source": "généré par tools/weapons-gen.mjs depuis armes.json et la liste des clips de vue de CS2 (steam.inf : ClientVersion=2000935, PatchVersion=1.41.9.2, VersionDate=Oct 22 2026)",
+ "weapons": [
+  {
+   "key": "cz75a",
+   "name": "CZ75-Auto",
+   "category": "pistolet",
+   "model": "weapons/models/cz75a/weapon_pist_cz75a.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_cz75a/idle_cz75a",
+    "draw": "animation/anims/viewmodel/pistol/pistol_cz75a/draw_cz75a",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_cz75a/shoot1_cz75a",
+    "reload": "animation/anims/viewmodel/pistol/pistol_cz75a/reload_cz75a",
+    "shoot_empty": "animation/anims/viewmodel/pistol/pistol_cz75a/shoot_empty_cz75a",
+    "reload_empty": "animation/anims/viewmodel/pistol/pistol_cz75a/reload_empty_cz75a",
+    "idle_empty": "animation/anims/viewmodel/pistol/pistol_cz75a/idle_slide_back_cz75a"
+   }
+  },
+  {
+   "key": "deagle",
+   "name": "Desert Eagle",
+   "category": "pistolet",
+   "model": "weapons/models/deagle/weapon_pist_deagle.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_deagle/idle_deagle",
+    "draw": "animation/anims/viewmodel/pistol/pistol_deagle/draw_deagle",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_deagle/shoot1_deagle",
+    "reload": "animation/anims/viewmodel/pistol/pistol_deagle/reload_deagle",
+    "shoot_empty": "animation/anims/viewmodel/pistol/pistol_deagle/shoot_empty_deagle",
+    "reload_empty": "animation/anims/viewmodel/pistol/pistol_deagle/reload_empty_deagle",
+    "idle_empty": "animation/anims/viewmodel/pistol/pistol_deagle/idle_slide_back_deagle"
+   }
+  },
+  {
+   "key": "elite",
+   "name": "Dual Berettas",
+   "category": "pistolet",
+   "model": "weapons/models/elite/weapon_pist_elite.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_elite/idle_elite",
+    "draw": "animation/anims/viewmodel/pistol/pistol_elite/draw_elite",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_elite/shoot_right1_elite",
+    "reload": "animation/anims/viewmodel/pistol/pistol_elite/reload_elite",
+    "shoot_empty": "animation/anims/viewmodel/pistol/pistol_elite/shoot_rightlast_elite",
+    "idle_empty": "animation/anims/viewmodel/pistol/pistol_elite/idle_leftrightempty_elite"
+   }
+  },
+  {
+   "key": "fiveseven",
+   "name": "Five-SeveN",
+   "category": "pistolet",
+   "model": "weapons/models/fiveseven/weapon_pist_fiveseven.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_fiveseven/idle_fiveseven",
+    "draw": "animation/anims/viewmodel/pistol/pistol_fiveseven/draw_fiveseven",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_fiveseven/shoot1_fiveseven",
+    "reload": "animation/anims/viewmodel/pistol/pistol_fiveseven/reload_fiveseven",
+    "shoot_empty": "animation/anims/viewmodel/pistol/pistol_fiveseven/shoot_empty_fiveseven",
+    "reload_empty": "animation/anims/viewmodel/pistol/pistol_fiveseven/reload_empty_fiveseven",
+    "idle_empty": "animation/anims/viewmodel/pistol/pistol_fiveseven/idle_slide_back_fiveseven"
+   }
+  },
+  {
+   "key": "glock",
+   "name": "Glock-18",
+   "category": "pistolet",
+   "model": "weapons/models/glock18/weapon_pist_glock18.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_glock18/idle_glock",
+    "draw": "animation/anims/viewmodel/pistol/pistol_glock18/draw_glock",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_glock18/shoot1_glock",
+    "reload": "animation/anims/viewmodel/pistol/pistol_glock18/reload_glock",
+    "shoot_empty": "animation/anims/viewmodel/pistol/pistol_glock18/shoot_empty_glock",
+    "reload_empty": "animation/anims/viewmodel/pistol/pistol_glock18/reload_empty_glock",
+    "idle_empty": "animation/anims/viewmodel/pistol/pistol_glock18/idle_slide_back_glock"
+   }
+  },
+  {
+   "key": "hkp2000",
+   "name": "P2000",
+   "category": "pistolet",
+   "model": "weapons/models/hkp2000/weapon_pist_hkp2000.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_hkp2000/idle_hkp",
+    "draw": "animation/anims/viewmodel/pistol/pistol_hkp2000/draw_hkp",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_hkp2000/shoot1_hkp",
+    "reload": "animation/anims/viewmodel/pistol/pistol_hkp2000/reload_hkp",
+    "shoot_empty": "animation/anims/viewmodel/pistol/pistol_hkp2000/shoot_empty_hkp",
+    "reload_empty": "animation/anims/viewmodel/pistol/pistol_hkp2000/reload_empty_hkp",
+    "idle_empty": "animation/anims/viewmodel/pistol/pistol_hkp2000/idle_slide_back_hkp"
+   }
+  },
+  {
+   "key": "p250",
+   "name": "P250",
+   "category": "pistolet",
+   "model": "weapons/models/p250/weapon_pist_p250.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_p250/idle_p250",
+    "draw": "animation/anims/viewmodel/pistol/pistol_p250/draw_p250",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_p250/shoot1_p250",
+    "reload": "animation/anims/viewmodel/pistol/pistol_p250/reload_p250",
+    "shoot_empty": "animation/anims/viewmodel/pistol/pistol_p250/shoot_empty_p250",
+    "reload_empty": "animation/anims/viewmodel/pistol/pistol_p250/reload_empty_p250",
+    "idle_empty": "animation/anims/viewmodel/pistol/pistol_p250/idle_slide_back_p250"
+   }
+  },
+  {
+   "key": "revolver",
+   "name": "R8 Revolver",
+   "category": "pistolet",
+   "model": "weapons/models/revolver/weapon_pist_revolver.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_revolver/idle_revolver",
+    "draw": "animation/anims/viewmodel/pistol/pistol_revolver/draw_revolver",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_revolver/shoot1_revolver",
+    "reload": "animation/anims/viewmodel/pistol/pistol_revolver/reload_revolver"
+   }
+  },
+  {
+   "key": "tec9",
+   "name": "Tec-9",
+   "category": "pistolet",
+   "model": "weapons/models/tec9/weapon_pist_tec9.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_tec9/idle_tec9",
+    "draw": "animation/anims/viewmodel/pistol/pistol_tec9/draw_tec9",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_tec9/shoot1_tec9",
+    "reload": "animation/anims/viewmodel/pistol/pistol_tec9/reload_tec9",
+    "shoot_empty": "animation/anims/viewmodel/pistol/pistol_tec9/shoot_empty_tec9"
+   }
+  },
+  {
+   "key": "usp_silencer",
+   "name": "USP-S",
+   "category": "pistolet",
+   "model": "weapons/models/usp_silencer/weapon_pist_usp_silencer.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/_default_pistol/idle_pistol",
+    "draw": "animation/anims/viewmodel/pistol/_default_pistol/draw_pistol",
+    "shoot": "animation/anims/viewmodel/pistol/_default_pistol/shoot1_pistol",
+    "reload": "animation/anims/viewmodel/pistol/_default_pistol/reload_pistol",
+    "shoot_empty": "animation/anims/viewmodel/pistol/_default_pistol/shoot_empty_pistol",
+    "reload_empty": "animation/anims/viewmodel/pistol/_default_pistol/reload_empty_pistol",
+    "idle_empty": "animation/anims/viewmodel/pistol/_default_pistol/idle_slide_back_pistol"
+   }
+  },
+  {
+   "key": "bizon",
+   "name": "PP-Bizon",
+   "category": "pistolet-mitrailleur",
+   "model": "weapons/models/bizon/weapon_smg_bizon.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_bizon/idle_bizon",
+    "draw": "animation/anims/viewmodel/rifle/rifle_bizon/draw_bizon",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_bizon/shoot1_bizon",
+    "reload": "animation/anims/viewmodel/rifle/rifle_bizon/reload_bizon"
+   }
+  },
+  {
+   "key": "mac10",
+   "name": "MAC-10",
+   "category": "pistolet-mitrailleur",
+   "model": "weapons/models/mac10/weapon_smg_mac10.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_mac10/idle_mac10",
+    "draw": "animation/anims/viewmodel/rifle/rifle_mac10/draw_mac10",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_mac10/shoot1_mac10",
+    "reload": "animation/anims/viewmodel/rifle/rifle_mac10/reload_mac10"
+   }
+  },
+  {
+   "key": "mp5sd",
+   "name": "MP5-SD",
+   "category": "pistolet-mitrailleur",
+   "model": "weapons/models/mp5sd/weapon_smg_mp5sd.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_mp5sd/idle_mp5sd",
+    "draw": "animation/anims/viewmodel/rifle/rifle_mp5sd/draw_mp5sd",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_mp5sd/shoot1_mp5sd",
+    "reload": "animation/anims/viewmodel/rifle/rifle_mp5sd/reload_mp5sd"
+   }
+  },
+  {
+   "key": "mp7",
+   "name": "MP7",
+   "category": "pistolet-mitrailleur",
+   "model": "weapons/models/mp7/weapon_smg_mp7.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_mp7/idle_mp7",
+    "draw": "animation/anims/viewmodel/rifle/rifle_mp7/draw_mp7",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_mp7/shoot1_mp7",
+    "reload": "animation/anims/viewmodel/rifle/rifle_mp7/reload_mp7"
+   }
+  },
+  {
+   "key": "mp9",
+   "name": "MP9",
+   "category": "pistolet-mitrailleur",
+   "model": "weapons/models/mp9/weapon_smg_mp9.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_mp9/idle_mp9",
+    "draw": "animation/anims/viewmodel/rifle/rifle_mp9/draw_mp9",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_mp9/shoot1_mp9",
+    "reload": "animation/anims/viewmodel/rifle/rifle_mp9/reload_mp9"
+   }
+  },
+  {
+   "key": "p90",
+   "name": "P90",
+   "category": "pistolet-mitrailleur",
+   "model": "weapons/models/p90/weapon_smg_p90.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_p90/idle_p90",
+    "draw": "animation/anims/viewmodel/rifle/rifle_p90/draw_p90",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_p90/shoot1_p90",
+    "reload": "animation/anims/viewmodel/rifle/rifle_p90/reload_p90"
+   }
+  },
+  {
+   "key": "ump45",
+   "name": "UMP-45",
+   "category": "pistolet-mitrailleur",
+   "model": "weapons/models/ump45/weapon_smg_ump45.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_ump45/idle_ump45",
+    "draw": "animation/anims/viewmodel/rifle/rifle_ump45/draw_ump45",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_ump45/shoot1_ump45",
+    "reload": "animation/anims/viewmodel/rifle/rifle_ump45/reload_ump45"
+   }
+  },
+  {
+   "key": "mag7",
+   "name": "MAG-7",
+   "category": "fusil à pompe",
+   "model": "weapons/models/mag7/weapon_shot_mag7.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_mag7/idle_mag7",
+    "draw": "animation/anims/viewmodel/rifle/rifle_mag7/draw_mag7",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_mag7/shoot1_mag7",
+    "reload": "animation/anims/viewmodel/rifle/rifle_mag7/reload_mag7"
+   }
+  },
+  {
+   "key": "nova",
+   "name": "Nova",
+   "category": "fusil à pompe",
+   "model": "weapons/models/nova/weapon_shot_nova.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_nova/idle_nova",
+    "draw": "animation/anims/viewmodel/rifle/rifle_nova/draw_nova",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_nova/shoot1_nova",
+    "reload": "animation/anims/viewmodel/rifle/rifle_nova/reload_nova"
+   }
+  },
+  {
+   "key": "sawedoff",
+   "name": "Sawed-Off",
+   "category": "fusil à pompe",
+   "model": "weapons/models/sawedoff/weapon_shot_sawedoff.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_sawedoff/idle_sawedoff",
+    "draw": "animation/anims/viewmodel/rifle/rifle_sawedoff/draw_sawedoff",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_sawedoff/shoot1_sawedoff",
+    "reload": "animation/anims/viewmodel/rifle/rifle_sawedoff/reload_sawedoff"
+   }
+  },
+  {
+   "key": "xm1014",
+   "name": "XM1014",
+   "category": "fusil à pompe",
+   "model": "weapons/models/xm1014/weapon_shot_xm1014.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_xm1014/idle_xm1014",
+    "draw": "animation/anims/viewmodel/rifle/rifle_xm1014/draw_xm1014",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_xm1014/shoot1_xm1014",
+    "reload": "animation/anims/viewmodel/rifle/rifle_xm1014/reload_xm1014"
+   }
+  },
+  {
+   "key": "m249",
+   "name": "M249",
+   "category": "mitrailleuse",
+   "model": "weapons/models/m249/weapon_mach_m249.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_m249/idle1_m249",
+    "draw": "animation/anims/viewmodel/rifle/rifle_m249/draw_m249",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_m249/shoot1_m249",
+    "reload": "animation/anims/viewmodel/rifle/rifle_m249/reload_m249"
+   }
+  },
+  {
+   "key": "negev",
+   "name": "Negev",
+   "category": "mitrailleuse",
+   "model": "weapons/models/negev/weapon_mach_negev.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_negev/idle_negev",
+    "draw": "animation/anims/viewmodel/rifle/rifle_negev/draw_negev",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_negev/shoot1_negev",
+    "reload": "animation/anims/viewmodel/rifle/rifle_negev/reload_negev",
+    "shoot_empty": "animation/anims/viewmodel/rifle/rifle_negev/shoot_empty_negev"
+   }
+  },
+  {
+   "key": "ak47",
+   "name": "AK-47",
+   "category": "fusil",
+   "model": "weapons/models/ak47/weapon_rif_ak47.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_ak/idle_ak",
+    "draw": "animation/anims/viewmodel/rifle/rifle_ak/draw_ak",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_ak/shoot1_ak",
+    "reload": "animation/anims/viewmodel/rifle/rifle_ak/reload_ak"
+   }
+  },
+  {
+   "key": "aug",
+   "name": "AUG",
+   "category": "fusil",
+   "model": "weapons/models/aug/weapon_rif_aug.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_aug/idle_aug",
+    "draw": "animation/anims/viewmodel/rifle/rifle_aug/draw_aug",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_aug/shoot1_aug",
+    "reload": "animation/anims/viewmodel/rifle/rifle_aug/reload_aug"
+   }
+  },
+  {
+   "key": "famas",
+   "name": "FAMAS",
+   "category": "fusil",
+   "model": "weapons/models/famas/weapon_rif_famas.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_famas/idle_famas",
+    "draw": "animation/anims/viewmodel/rifle/rifle_famas/draw_famas",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_famas/shoot1_famas",
+    "reload": "animation/anims/viewmodel/rifle/rifle_famas/reload_famas"
+   }
+  },
+  {
+   "key": "galilar",
+   "name": "Galil AR",
+   "category": "fusil",
+   "model": "weapons/models/galilar/weapon_rif_galilar.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_galilar/idle_galilar",
+    "draw": "animation/anims/viewmodel/rifle/rifle_galilar/draw_galilar",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_galilar/shoot1_galilar",
+    "reload": "animation/anims/viewmodel/rifle/rifle_galilar/reload_galilar"
+   }
+  },
+  {
+   "key": "m4a1",
+   "name": "M4A4",
+   "category": "fusil",
+   "model": "weapons/models/m4a4/weapon_rif_m4a4.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_m4a4/idle_m4a4",
+    "draw": "animation/anims/viewmodel/rifle/rifle_m4a4/draw_m4a4",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_m4a4/shoot1_m4a4",
+    "reload": "animation/anims/viewmodel/rifle/rifle_m4a4/reload_m4a4"
+   }
+  },
+  {
+   "key": "m4a1_silencer",
+   "name": "M4A1-S",
+   "category": "fusil",
+   "model": "weapons/models/m4a1_silencer/weapon_rif_m4a1_silencer.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/_default_rifle/idle_rifle",
+    "draw": "animation/anims/viewmodel/rifle/_default_rifle/draw_rifle",
+    "shoot": "animation/anims/viewmodel/rifle/_default_rifle/shoot1_rifle",
+    "reload": "animation/anims/viewmodel/rifle/_default_rifle/reload_rifle"
+   }
+  },
+  {
+   "key": "sg556",
+   "name": "SG 553",
+   "category": "fusil",
+   "model": "weapons/models/sg556/weapon_rif_sg556.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_sg556/idle_sg556",
+    "draw": "animation/anims/viewmodel/rifle/rifle_sg556/draw_sg556",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_sg556/shoot1_sg556",
+    "reload": "animation/anims/viewmodel/rifle/rifle_sg556/reload_sg556"
+   }
+  },
+  {
+   "key": "awp",
+   "name": "AWP",
+   "category": "sniper",
+   "model": "weapons/models/awp/weapon_snip_awp.vmdl_c",
+   "hideScoped": true,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_awp/idle_awp",
+    "draw": "animation/anims/viewmodel/rifle/rifle_awp/draw_awp",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_awp/shoot1_awp",
+    "reload": "animation/anims/viewmodel/rifle/rifle_awp/reload_awp"
+   }
+  },
+  {
+   "key": "g3sg1",
+   "name": "G3SG1",
+   "category": "sniper",
+   "model": "weapons/models/g3sg1/weapon_snip_g3sg1.vmdl_c",
+   "hideScoped": true,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_g3sg1/idle1_g3sg1",
+    "draw": "animation/anims/viewmodel/rifle/rifle_g3sg1/draw_g3sg1",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_g3sg1/shoot1_g3sg1",
+    "reload": "animation/anims/viewmodel/rifle/rifle_g3sg1/reload_g3sg1"
+   }
+  },
+  {
+   "key": "scar20",
+   "name": "SCAR-20",
+   "category": "sniper",
+   "model": "weapons/models/scar20/weapon_snip_scar20.vmdl_c",
+   "hideScoped": true,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_scar20/idle_scar20",
+    "draw": "animation/anims/viewmodel/rifle/rifle_scar20/draw_scar20",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_scar20/shoot1_scar20",
+    "reload": "animation/anims/viewmodel/rifle/rifle_scar20/reload_scar20",
+    "shoot_empty": "animation/anims/viewmodel/rifle/rifle_scar20/shoot_empty_scar20",
+    "reload_empty": "animation/anims/viewmodel/rifle/rifle_scar20/reload_empty_scar20",
+    "idle_empty": "animation/anims/viewmodel/rifle/rifle_scar20/idle_slide_back_scar20"
+   }
+  },
+  {
+   "key": "ssg08",
+   "name": "SSG 08",
+   "category": "sniper",
+   "model": "weapons/models/ssg08/weapon_snip_ssg08.vmdl_c",
+   "hideScoped": true,
+   "clips": {
+    "idle": "animation/anims/viewmodel/rifle/rifle_ssg08/idle_ssg08",
+    "draw": "animation/anims/viewmodel/rifle/rifle_ssg08/draw_ssg08",
+    "shoot": "animation/anims/viewmodel/rifle/rifle_ssg08/shoot1_ssg08",
+    "reload": "animation/anims/viewmodel/rifle/rifle_ssg08/reload_ssg08"
+   }
+  },
+  {
+   "key": "taser",
+   "name": "Zeus x27",
+   "category": "zeus",
+   "model": "weapons/models/taser/weapon_pist_taser.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/pistol/pistol_taser/idle_taser",
+    "draw": "animation/anims/viewmodel/pistol/pistol_taser/draw_taser",
+    "shoot": "animation/anims/viewmodel/pistol/pistol_taser/shoot1_taser"
+   }
+  },
+  {
+   "key": "knife",
+   "name": "knife",
+   "category": "couteau",
+   "model": "weapons/models/knife/knife_default_ct/weapon_knife_default_ct.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/knife/_default_knife/idle_knife",
+    "draw": "animation/anims/viewmodel/knife/_default_knife/draw_knife",
+    "attack": "animation/anims/viewmodel/knife/_default_knife/light_miss1_knife",
+    "attack2": "animation/anims/viewmodel/knife/_default_knife/heavy_miss1_knife",
+    "attack_alt": "animation/anims/viewmodel/knife/_default_knife/light_miss2_knife",
+    "hit": "animation/anims/viewmodel/knife/_default_knife/light_hit1_knife",
+    "hit_alt": "animation/anims/viewmodel/knife/_default_knife/light_hit2_knife",
+    "backstab": "animation/anims/viewmodel/knife/_default_knife/light_backstab_knife",
+    "backstab_alt": "animation/anims/viewmodel/knife/_default_knife/light_backstab2_knife",
+    "hit2": "animation/anims/viewmodel/knife/_default_knife/heavy_hit1_knife",
+    "backstab2": "animation/anims/viewmodel/knife/_default_knife/heavy_backstab_knife"
+   }
+  },
+  {
+   "key": "knife_t",
+   "name": "knife_t",
+   "category": "couteau",
+   "model": "weapons/models/knife/knife_default_t/weapon_knife_default_t.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/knife/knife_default_t/idle_default_t",
+    "draw": "animation/anims/viewmodel/knife/knife_default_t/draw_default_t",
+    "attack": "animation/anims/viewmodel/knife/knife_default_t/light_miss1_default_t",
+    "attack2": "animation/anims/viewmodel/knife/knife_default_t/heavy_miss1_default_t",
+    "attack_alt": "animation/anims/viewmodel/knife/knife_default_t/light_miss2_default_t",
+    "hit": "animation/anims/viewmodel/knife/knife_default_t/light_hit1_default_t",
+    "hit_alt": "animation/anims/viewmodel/knife/knife_default_t/light_hit2_default_t",
+    "backstab": "animation/anims/viewmodel/knife/knife_default_t/light_backstab_default_t",
+    "backstab_alt": "animation/anims/viewmodel/knife/knife_default_t/light_backstab2_default_t",
+    "hit2": "animation/anims/viewmodel/knife/knife_default_t/heavy_hit1_default_t",
+    "backstab2": "animation/anims/viewmodel/knife/knife_default_t/heavy_backstab_default_t"
+   }
+  },
+  {
+   "key": "decoy",
+   "name": "Decoy Grenade",
+   "category": "grenade",
+   "model": "weapons/models/grenade/decoy/weapon_decoy.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/grenade/_default_grenade/idle_grenade",
+    "draw": "animation/anims/viewmodel/grenade/_default_grenade/draw_grenade",
+    "pullpin": "animation/anims/viewmodel/grenade/_default_grenade/pullpin_grenade",
+    "throw": "animation/anims/viewmodel/grenade/_default_grenade/throw_overhand_grenade",
+    "throw_underhand": "animation/anims/viewmodel/grenade/_default_grenade/throw_underhand_grenade"
+   }
+  },
+  {
+   "key": "flashbang",
+   "name": "Flashbang",
+   "category": "grenade",
+   "model": "weapons/models/grenade/flashbang/weapon_flashbang.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/grenade/grenade_flashbang/idle_flashbang",
+    "draw": "animation/anims/viewmodel/grenade/grenade_flashbang/draw_flashbang",
+    "pullpin": "animation/anims/viewmodel/grenade/grenade_flashbang/pullpin_flashbang",
+    "throw": "animation/anims/viewmodel/grenade/grenade_flashbang/throw_overhand_flashbang",
+    "throw_underhand": "animation/anims/viewmodel/grenade/grenade_flashbang/throw_underhand_flashbang"
+   }
+  },
+  {
+   "key": "hegrenade",
+   "name": "High Explosive Grenade",
+   "category": "grenade",
+   "model": "weapons/models/grenade/hegrenade/weapon_hegrenade.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/grenade/grenade_hegrenade/idle_hegrenade",
+    "draw": "animation/anims/viewmodel/grenade/grenade_hegrenade/draw_hegrenade",
+    "pullpin": "animation/anims/viewmodel/grenade/grenade_hegrenade/pullpin_hegrenade",
+    "throw": "animation/anims/viewmodel/grenade/grenade_hegrenade/throw_overhand_hegrenade",
+    "throw_underhand": "animation/anims/viewmodel/grenade/grenade_hegrenade/throw_underhand_hegrenade"
+   }
+  },
+  {
+   "key": "incgrenade",
+   "name": "Incendiary Grenade",
+   "category": "grenade",
+   "model": "weapons/models/grenade/incendiary/weapon_incendiarygrenade.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/grenade/grenade_incendiary/idle_incendiary",
+    "draw": "animation/anims/viewmodel/grenade/grenade_incendiary/draw_incendiary",
+    "pullpin": "animation/anims/viewmodel/grenade/grenade_incendiary/pullpin_incendiary",
+    "throw": "animation/anims/viewmodel/grenade/grenade_incendiary/throw_overhand_incendiary",
+    "throw_underhand": "animation/anims/viewmodel/grenade/grenade_incendiary/throw_underhand_incendiary"
+   }
+  },
+  {
+   "key": "molotov",
+   "name": "Molotov",
+   "category": "grenade",
+   "model": "weapons/models/grenade/molotov/weapon_molotov.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/grenade/grenade_molotov/idle_molotov",
+    "draw": "animation/anims/viewmodel/grenade/grenade_molotov/draw_molotov",
+    "pullpin": "animation/anims/viewmodel/grenade/grenade_molotov/pullpin_molotov",
+    "throw": "animation/anims/viewmodel/grenade/grenade_molotov/throw_overhand_molotov",
+    "throw_underhand": "animation/anims/viewmodel/grenade/grenade_molotov/throw_underhand_molotov"
+   }
+  },
+  {
+   "key": "smokegrenade",
+   "name": "Smoke Grenade",
+   "category": "grenade",
+   "model": "weapons/models/grenade/smokegrenade/weapon_smokegrenade.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/grenade/grenade_smokegrenade/idle_smoke",
+    "draw": "animation/anims/viewmodel/grenade/grenade_smokegrenade/draw_smoke",
+    "pullpin": "animation/anims/viewmodel/grenade/grenade_smokegrenade/pullpin_smoke",
+    "throw": "animation/anims/viewmodel/grenade/grenade_smokegrenade/throw_overhand_smoke",
+    "throw_underhand": "animation/anims/viewmodel/grenade/grenade_smokegrenade/throw_underhand_smoke"
+   }
+  },
+  {
+   "key": "c4",
+   "name": "C4 Explosive",
+   "category": "C4",
+   "model": "weapons/models/c4/weapon_c4.vmdl_c",
+   "hideScoped": false,
+   "clips": {
+    "idle": "animation/anims/viewmodel/equipment/c4/idle_c4",
+    "draw": "animation/anims/viewmodel/equipment/c4/draw_c4",
+    "plant": "animation/anims/viewmodel/equipment/c4/plant_c4"
+   }
+  }
+ ]
+}

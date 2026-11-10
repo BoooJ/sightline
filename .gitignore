@@ -1,0 +1,23 @@
+*.dem
+*.dem.bz2
+*.dem.bak
+data/
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.env
+*.egg-info/
+config.toml
+data-e2e/
+.superpowers/
+*.tsbuildinfo
+test-results/
+playwright-report/
+.ui-audit/
+
+# plugin TeamSpeak : sources tierces récupérées par plugin/fetch_deps (SDK TeamSpeak « all rights reserved », libopus)
+plugin/third_party/
+plugin/build/

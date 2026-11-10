@@ -1,0 +1,17 @@
+// TAVR - AUTO RADAR. v 2.5.0a
+"de_anubis"
+{
+	"CTSpawn_x" "0.610000"
+	"CTSpawn_y" "0.220000"
+	"TSpawn_x" "0.580000"
+	"TSpawn_y" "0.930000"
+	"material" "overviews/de_anubis"
+	"pos_x" "-2796.000000"
+	"pos_y" "3328.000000"
+	"scale" "5.220000"
+	// absents de l'overview de Valve : relevés dans les entités de la carte (func_bomb_target, bomb_site_designation 0 = A, 1 = B)
+	"bombA_x" "0.75"
+	"bombA_y" "0.26"
+	"bombB_x" "0.33"
+	"bombB_y" "0.49"
+}

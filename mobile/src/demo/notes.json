@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1, "map": "de_inferno", "side": "T", "shared": false, "author_id": 0, "author": "ZywOo",
+    "body": "Au pistol CT, ils mettent souvent trois joueurs sur B. Banane rapide avec molo coin et flash au-dessus pour sortir le joueur de dark.",
+    "match_id": null, "team_id": 1, "strat_id": null, "created_at": "@-2T18:10:00", "updated_at": "@-2T18:10:00"
+  },
+  {
+    "id": 2, "map": "de_inferno", "side": "CT", "shared": true, "author_id": 7, "author": "apEX",
+    "body": "Contre MOUZ : fake B avec utilitaires, puis rotation A par mid. Ne pas tourner avant une info sur l'entrée A.",
+    "match_id": null, "team_id": 1, "strat_id": null, "created_at": "@-2T20:40:00", "updated_at": "@-2T20:40:00"
+  },
+  {
+    "id": 3, "map": "de_inferno", "side": "CT", "shared": false, "author_id": 0, "author": "ZywOo",
+    "body": "Reprise B perdue sans utilitaires. Garder une smoke et une molo pour la reprise au lieu de tout lâcher sur banane.",
+    "match_id": 2, "team_id": 1, "strat_id": 4, "created_at": "@-3T22:05:00", "updated_at": "@-3T22:05:00"
+  },
+  {
+    "id": 4, "map": "de_dust2", "side": "T", "shared": false, "author_id": 0, "author": "ZywOo",
+    "body": "Smoke de porte B avant 1:30, sinon le CT de fenêtre voit l'entrée. Je pars dernier sur l'exécution.",
+    "match_id": null, "team_id": null, "strat_id": 1, "created_at": "@-1T23:20:00", "updated_at": "@-1T23:20:00"
+  },
+  {
+    "id": 5, "map": "de_cache", "side": "T", "shared": false, "author_id": 0, "author": "ZywOo",
+    "body": "Mid : ne jamais peek seul vers boost en début de round. Attendre la smoke de white box.",
+    "match_id": 1, "team_id": 1, "strat_id": null, "created_at": "@-5T21:30:00", "updated_at": "@-5T21:30:00"
+  }
+]

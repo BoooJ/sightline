@@ -1,0 +1,145 @@
+{
+  "id": "sightlineW4form1",
+  "name": "W4 · Formulaire → Sightline",
+  "active": false,
+  "nodes": [
+    {
+      "id": "d4000000-0000-4000-8000-000000000001",
+      "name": "Formulaire",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "authentication": "basicAuth",
+        "formTitle": "Envoyer une démo à Sightline",
+        "formDescription": "Dépose une démo CS2 (.dem ou .dem.bz2). Elle est importée dans le dossier Formulaire, analysée, puis annoncée sur #sightline.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Démo",
+              "fieldName": "demo",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".dem,.bz2",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Adversaire",
+              "fieldName": "opponent",
+              "fieldType": "text",
+              "placeholder": "Facultatif"
+            }
+          ]
+        },
+        "responseMode": "onReceived",
+        "options": {
+          "path": "import-demo",
+          "buttonLabel": "Envoyer",
+          "appendAttribution": false,
+          "ignoreBots": true,
+          "respondWithOptions": {
+            "values": {
+              "respondWith": "text",
+              "formSubmittedText": "Démo reçue. Elle est en cours d'import : l'annonce arrivera sur #sightline."
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "slCredFormBasic1",
+          "name": "Formulaire d'import"
+        }
+      },
+      "webhookId": "2c7d9e4f-1a3b-4c5d-8e9f-a0b1c2d3e4f5"
+    },
+    {
+      "id": "d4000000-0000-4000-8000-000000000002",
+      "name": "Fichier",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Le fichier déposé dans le formulaire, sous un nom fixe pour l'envoi à Sightline, et l'adversaire s'il est donné.\nconst item = $input.first();\nconst key = Object.keys(item.binary || {})[0];\nif (!key) throw new Error('Aucune démo dans le formulaire');\nconst opponent = String(item.json.opponent ?? item.json.Adversaire ?? '').trim().slice(0, 64);\nreturn [{ json: { opponent }, binary: { demo: item.binary[key] } }];\n"
+      }
+    },
+    {
+      "id": "d4000000-0000-4000-8000-000000000003",
+      "name": "Vers Sightline",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://sightline.example.com/api/integrations/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "demo"
+            },
+            {
+              "name": "opponent",
+              "value": "={{ $json.opponent }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "slCredSightline1",
+          "name": "Sightline"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Formulaire": {
+      "main": [
+        [
+          {
+            "node": "Fichier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fichier": {
+      "main": [
+        [
+          {
+            "node": "Vers Sightline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "errorWorkflow": "sightlineW0err01"
+  },
+  "pinData": {}
+}
